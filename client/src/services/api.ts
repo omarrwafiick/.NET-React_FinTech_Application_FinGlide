@@ -1,4 +1,4 @@
-import { CompanySearch } from "../types/types";
+import { CompanyProfile, CompanySearch } from "../types/types";
 import axios from 'axios';
 
 export interface SearchResponse {
@@ -16,10 +16,10 @@ export const searchByCompanyName = async (name:string) : Promise<SearchResponse|
     }
 }
 
-export const searchByCompanySymbol = async (symbol:string) : Promise<SearchResponse|string> =>{
+export const getCompanyProfileBySymbol = async (symbol:any) : Promise<CompanyProfile|string> =>{
     try {
        const key = process.env.REACT_APP_FIN_API_KEY
-       const result = await axios.get<SearchResponse>(`https://financialmodelingprep.com/stable/search-symbol?query=${symbol}&apikey=${key}`);
+       const result = await axios.get<CompanyProfile>(`https://financialmodelingprep.com/stable/profile?symbol=${symbol}&apikey=${key}`);
         return result.data;
     } catch (error:any) {
         console.error(error);
