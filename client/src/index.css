@@ -10,4 +10,28 @@ body {
 
 .font-sora {
   font-family: 'Sora', sans-serif;
+} 
+
+.bg-primary{
+  background-color: #34AFFB;
+}
+
+.bg-secondary{
+  background-color: #37FB34;
+}
+
+.bg-sub{
+  background-color: #DE34FB;
+}
+
+.txt-primary{
+  color: #34AFFB;
+}
+
+.txt-secondary{
+  color: #37FB34;
+}
+
+.txt-sub{
+  color: #DE34FB;
 }

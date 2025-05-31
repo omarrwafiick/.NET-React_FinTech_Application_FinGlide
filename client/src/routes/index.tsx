@@ -9,6 +9,11 @@ import Portfolio from '../pages/portfolio';
 import Search from '../pages/search';
 import Company from '../pages/company';
 import App from '../App';
+import CompanyProfile from '../components/companyProfile/companyProfile';
+import IncomeStatement from '../components/incomeStatement/incomeStatement';
+import Design from '../pages/design';
+import BalanceSheet from '../components/balanceSheet/balanceSheet';
+import CashFlowStatement from '../components/cashFlowStatement/cashFlowStatement';
 
 const router = createBrowserRouter(
   [
@@ -19,6 +24,10 @@ const router = createBrowserRouter(
         {
           path: "/",
           element: <Home />
+        },
+        {
+          path: "/design-guide",
+          element: <Design />
         },
         {
           path: "/forget-password",
@@ -42,7 +51,25 @@ const router = createBrowserRouter(
         },
         {
           path: "/company/:ticker",
-          element: <Company  />
+          element: <Company  />,
+          children:[
+            {
+              path:"company-profile",
+              element: <CompanyProfile  /> 
+            },
+            {
+              path:"income-statement",
+              element: <IncomeStatement  />
+            },
+            {
+              path:"balance-sheet",
+              element: <BalanceSheet  /> 
+            },
+            {
+              path:"cashflow-statement",
+              element: <CashFlowStatement  />
+            }
+          ]
         },
         {
           path: "/portfolio",
