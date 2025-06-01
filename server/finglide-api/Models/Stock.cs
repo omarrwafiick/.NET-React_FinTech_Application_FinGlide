@@ -23,8 +23,8 @@ namespace finglide_api.models
         public string Industry { get; private set; } = string.Empty;
         public long MarketCapital { get; private set; }
         public List<Comment> Comments { get; private set; } = new();
-        public Stock CreateFactory(string symbol, string companyName, decimal amount, decimal lastDivided, string industry, long marketCapital) => new Stock(symbol, companyName, amount, lastDivided, industry, marketCapital);
-        public Stock Update(Stock stock,decimal amount, decimal lastDivided, long marketCapital)
+        public static Stock CreateFactory(string symbol, string companyName, decimal amount, decimal lastDivided, string industry, long marketCapital) => new Stock(symbol, companyName, amount, lastDivided, industry, marketCapital);
+        public static Stock Update(Stock stock,decimal amount, decimal lastDivided, long marketCapital)
         {
             stock.Amount = amount;
             stock.LastDivided = lastDivided;

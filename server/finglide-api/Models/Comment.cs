@@ -16,8 +16,8 @@ namespace finglide_api.models
         public Stock? Stock { get; private set; }
         public int StockId { get; private set; }
 
-        public Comment CreateFactory(string title, string content, DateTime createdAt, int stockId) => new Comment(title, content, createdAt, stockId);
-        public Comment Update(Comment comment, string title, string content)
+        public static Comment CreateFactory(string title, string content, DateTime createdAt, int stockId) => new Comment(title, content, createdAt, stockId);
+        public static Comment Update(Comment comment, string title, string content)
         {
             comment.Title = title;
             comment.Content = content; 
