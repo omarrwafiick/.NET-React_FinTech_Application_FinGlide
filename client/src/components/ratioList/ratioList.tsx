@@ -8,7 +8,7 @@ type Props = {
 
 const RatioList = ({data}: Props) => {
   return (
-    <div className='grid grid-cols-2'>
+    <div className='grid grid-cols-4 gap-6 w-full'>
      {
       Object.entries(data).map(([key, value], i) => ( 
         <RatioCard key={i} title={key} subTitle={value} />

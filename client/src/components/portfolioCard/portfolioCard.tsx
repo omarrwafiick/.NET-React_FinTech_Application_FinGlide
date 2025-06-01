@@ -9,8 +9,8 @@ type Props = {
 
 const PortfolioCard = ({value, onPortfolioRemove}: Props) => {
   return (
-    <div>
-        <Link to={`company/${value}//company-profile`}><h3>{value}</h3></Link>
+    <div className='shadow-xl p-6 rounded-lg'>
+        <Link to={`/company/${value}/company-profile`}><h3 className='text-xl'>{value}</h3></Link>
         <Button onClick={()=>onPortfolioRemove(value)} title='delete' type='button'/>
     </div>
   )

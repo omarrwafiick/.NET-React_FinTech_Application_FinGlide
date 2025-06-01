@@ -27,9 +27,9 @@ const CompanyProfile = (props: Props) => {
   },[]);
 
   return (
-    <div>
+    <div className='w-full'>
         {
-          companyData ?  
+          companyData ?   
           <RatioList data={companyData} />
           :
           <Loader />

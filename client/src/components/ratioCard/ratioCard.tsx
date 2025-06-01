@@ -9,8 +9,8 @@ type Props = {
 const RatioCard = ({title, subTitle}: Props) => {
   return (
     <div className="p-4 bg-white rounded-lg shadow-md">
-      <h3 className="text-sm text-gray-500 mb-1">{title}</h3>
-      <p className="text-base text-gray-800">{formatRatio(subTitle)}</p>
+      <h3 className="text-sm capitalize text-gray-800 mb-1">{title}</h3>
+      <p className="text-base capitalize text-gray-900">{formatRatio(subTitle)}</p>
     </div>
   )
 }

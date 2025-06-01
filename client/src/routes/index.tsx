@@ -1,19 +1,20 @@
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
-import Home from '../pages/home';
-import ForgotPassword from '../pages/forgetPassword';
-import ResetPassword from '../pages/resetPassword';
-import Signup from '../pages/signup';
-import Login from '../pages/login';
-import Portfolio from '../pages/portfolio';
-import Search from '../pages/search';
-import Company from '../pages/company';
+import Home from '../pages/homePage/home';
+import ForgotPassword from '../pages/authPages/forgetPassword';
+import ResetPassword from '../pages/authPages/resetPassword';
+import Signup from '../pages/authPages/signup';
+import Login from '../pages/authPages/login';
+import Portfolio from '../pages/portfolioPage/portfolio';
+import Search from '../pages/searchPage/search';
+import Company from '../pages/companyPage/company';
 import App from '../App';
 import CompanyProfile from '../components/companyProfile/companyProfile';
 import IncomeStatement from '../components/incomeStatement/incomeStatement';
-import Design from '../pages/design';
+import Design from '../pages/designPage/design';
 import BalanceSheet from '../components/balanceSheet/balanceSheet';
 import CashFlowStatement from '../components/cashFlowStatement/cashFlowStatement';
+import Notfound from '../pages/notfoundPage/notfound';
 
 const router = createBrowserRouter(
   [
@@ -77,7 +78,7 @@ const router = createBrowserRouter(
         },
         {
           path: "*",
-          element: <div>Not Found</div>
+          element: <Notfound />
         }
       ]
     }, 
