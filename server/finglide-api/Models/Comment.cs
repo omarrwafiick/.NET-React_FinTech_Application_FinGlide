@@ -3,10 +3,25 @@ namespace finglide_api.models
 {
     public class Comment : BaseEntity
     {
-        public string Title { get; set; } = string.Empty;
-        public string Content { get; set; } = string.Empty;
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow ;
-        public Stock? Stock { get; set; } 
-        public int StockId { get; set; }
+        private Comment(string title, string content, DateTime createdAt, int stockId)
+        {
+            Title = title;
+            Content = content;
+            CreatedAt = createdAt;
+            StockId = stockId;
+        }
+        public string Title { get; private set; } = string.Empty;
+        public string Content { get; private set; } = string.Empty;
+        public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
+        public Stock? Stock { get; private set; }
+        public int StockId { get; private set; }
+
+        public Comment CreateFactory(string title, string content, DateTime createdAt, int stockId) => new Comment(title, content, createdAt, stockId);
+        public Comment Update(Comment comment, string title, string content)
+        {
+            comment.Title = title;
+            comment.Content = content; 
+            return comment;
+        }
     }
 }

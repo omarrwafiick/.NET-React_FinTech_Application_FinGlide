@@ -1,4 +1,6 @@
+using finglide_api.Contracts;
 using finglide_api.Data;
+using finglide_api.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args); 
@@ -7,6 +9,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddControllers();
+
+builder.Services.AddScoped(typeof(IMainRepository<>), typeof(MainRepository<>));
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
