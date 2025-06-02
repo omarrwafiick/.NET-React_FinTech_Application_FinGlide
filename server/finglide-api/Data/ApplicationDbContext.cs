@@ -1,15 +1,35 @@
-
 using finglide_api.models;
-using Microsoft.EntityFrameworkCore;
+using finglide_api.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore; 
 
 namespace finglide_api.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-        }  
+        }
         public DbSet<Stock> Stocks { get; set; }
         public DbSet<Comment> Comments { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<IdentityRole>().HasData(
+                [
+                    new IdentityRole {
+                        Id = "da9ec84e-5e35-42cb-931b-f14a3a534fc9",
+                        Name = "Admin",
+                        NormalizedName = "ADMIN"
+                    },
+                    new IdentityRole {
+                        Id = "50912174-7a55-4b68-9f47-ec58d8fcfdef",
+                        Name = "User",
+                        NormalizedName = "USER" 
+                    }
+                ]
+            );
+        }
     }
 }
