@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using finglide_api.Models;
 
 namespace finglide_api.models
 {
@@ -22,7 +23,8 @@ namespace finglide_api.models
         public decimal LastDivided { get; private set; }
         public string Industry { get; private set; } = string.Empty;
         public long MarketCapital { get; private set; }
-        public List<Comment> Comments { get; private set; } = new();
+        public List<Comment> Comments { get; set; } = new();
+        public List<Portfolio> Portfolios { get; set; } = new();
         public static Stock CreateFactory(string symbol, string companyName, decimal amount, decimal lastDivided, string industry, long marketCapital) => new Stock(symbol, companyName, amount, lastDivided, industry, marketCapital);
         public static Stock Update(Stock stock,decimal amount, decimal lastDivided, long marketCapital)
         {

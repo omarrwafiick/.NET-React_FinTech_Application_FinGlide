@@ -1,0 +1,9 @@
+global using finglide_api.Contracts;
+global using finglide_api.Dtos;
+global using finglide_api.Mappers;
+global using finglide_api.models;
+global using finglide_api.Models;
+global using finglide_api.Services;
+global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.AspNetCore.Mvc;

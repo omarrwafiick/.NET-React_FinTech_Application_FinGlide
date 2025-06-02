@@ -1,9 +1,6 @@
-using finglide_api.Contracts;
-using finglide_api.Dtos; 
-using Microsoft.AspNetCore.Mvc; 
-
+ 
 namespace finglide_api.Controllers
-{
+{ 
     [Route("api/finglide/accounts")]
     [ApiController]
     public class AccountsController : Controller

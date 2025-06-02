@@ -1,6 +1,3 @@
-using finglide_api.models;
-using finglide_api.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore; 
 
@@ -13,6 +10,7 @@ namespace finglide_api.Data
         }
         public DbSet<Stock> Stocks { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Portfolio> Portfolios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -26,10 +24,22 @@ namespace finglide_api.Data
                     new IdentityRole {
                         Id = "50912174-7a55-4b68-9f47-ec58d8fcfdef",
                         Name = "User",
-                        NormalizedName = "USER" 
+                        NormalizedName = "USER"
                     }
                 ]
             );
+
+            builder.Entity<Portfolio>(x => x.HasKey(p => new { p.StokeId, p.UserId }));
+
+            builder.Entity<Portfolio>()
+                .HasOne(u => u.User)
+                .WithMany(s => s.Portfolios)
+                .HasForeignKey(k => k.UserId);
+
+            builder.Entity<Portfolio>()
+                .HasOne(u => u.Stock)
+                .WithMany(s => s.Portfolios)
+                .HasForeignKey(k => k.StokeId); 
         }
     }
 }

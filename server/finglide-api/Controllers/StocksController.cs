@@ -1,13 +1,7 @@
-using System.IO.Compression;
-using System.Threading.Tasks;
-using finglide_api.Contracts;
-using finglide_api.Dtos;
-using finglide_api.Mappers;
-using finglide_api.models;
-using Microsoft.AspNetCore.Mvc; 
-
+ 
 namespace finglide_api.Controllers
 {
+    [Authorize]
     [Route("api/finglide/stocks")]
     [ApiController]
     public class StocksController : Controller
@@ -21,7 +15,7 @@ namespace finglide_api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _repository.GetAsync(x => x.Comments);
+            var result = await _repository.GetNestedAsync(x => x.Comments, y => y.User);
             return result.Any() ? Ok(result.Select(x => x.FromStockToDto())) : NotFound("Nothing was found");
         }
 
@@ -54,7 +48,9 @@ namespace finglide_api.Controllers
         public async Task<IActionResult> Create([FromBody] CreateStockDto dto)
         {
             var exists = await _repository.IsExistsAsync(x=>x.CompanyName==dto.CompanyName&&x.MarketCapital == dto.MarketCapital);
-            if(!exists) return BadRequest("Stock already exists");
+            if(!exists)
+                return BadRequest("Stock already exists");
+
             var result = await _repository.CreateAsync(
                 Stock.CreateFactory(
                     dto.Symbol,
@@ -71,7 +67,9 @@ namespace finglide_api.Controllers
         public async Task<IActionResult> Update([FromRoute] int stockid, [FromBody] UpdateStockDto dto)
         {
             var stock = await _repository.GetAsync(stockid);
-            if(stock is null) return NotFound("Nothing was found");
+            if(stock is null)
+                return NotFound("Nothing was found");
+                
             var result = await _repository.UpdateAsync(Stock.Update(stock, dto.Amount, dto.LastDivided, stock.MarketCapital));
             return result ? Ok("Stock was updated successfully") : BadRequest("Failed to update stock");
         }
@@ -80,7 +78,9 @@ namespace finglide_api.Controllers
         public async Task<IActionResult> Delete([FromRoute] int stockid)
         { 
             var stock = await _repository.GetAsync(stockid);
-            if(stock is null) return NotFound("Nothing was found");
+            if(stock is null)
+                return NotFound("Nothing was found");
+
             var result = await _repository.DeleteAsync(stock);
             return result ? NoContent() : BadRequest("Failed to delete stock");
         }
