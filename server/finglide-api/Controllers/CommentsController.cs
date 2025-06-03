@@ -8,51 +8,55 @@ namespace finglide_api.Controllers
     {
         private readonly IMainRepository<Comment> _commentRepository;
         private readonly IMainRepository<Stock> _stockRepository;
+        private readonly IFMPService _fmpService;
         private readonly UserManager<User> _userManager;
         public CommentsController(
             IMainRepository<Comment> commentRepository,
             IMainRepository<Stock> stockRepository,
+            IFMPService fmpService,
             UserManager<User> userManager)
         {
             _commentRepository = commentRepository;
             _stockRepository = stockRepository;
+            _fmpService = fmpService;
             _userManager = userManager;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [HttpGet("{symbol:alpha}/{isdescending:bool}")]
+        public IActionResult GetByStockSymbol([FromRoute] string symbol,[FromRoute] bool isdescending)
         {
-            var result = await _commentRepository.GetAsync(x => x.Stock!, i => i.User);
-            return result.Any() ? Ok(result.Select(x => x.FromCommentToDtoDetails())) : NotFound("Nothing was found");
+            var result = _commentRepository.Get(s => s.Stock!.Symbol.ToLower() == symbol.ToLower(), i => i.User, i => i.Stock!);
+
+            if (isdescending) result.OrderByDescending(c => c.CreatedAt);
+            else result.OrderBy(c => c.CreatedAt);
+
+            return result is not null ? Ok(result.Select(c => c.FromCommentToDtoDetails())) : NotFound("Nothing was found");
         }
 
-        [HttpGet("{commentid:int}")]
-        public async Task<IActionResult> GetById([FromRoute] int commentid)
-        {
-            var result = await _commentRepository.GetAsync(commentid, x => x.Stock!, i => i.User);
-            return result is not null ? Ok(result.FromCommentToDtoDetails()) : NotFound("Nothing was found");
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateCommentDto dto)
+        [HttpPost("{symbol:alpha}")]
+        public async Task<IActionResult> Create([FromRoute] string symbol, [FromBody] CreateCommentDto dto)
         {
             var userExists = await _userManager.FindByIdAsync(dto.UserId);
             if (userExists is not null)
                 return NotFound("User was not found");
 
-            var exists = await _stockRepository.IsExistsAsync(dto.StockId);
-            if (!exists)
-                return NotFound("Stock was not found");
+            var exists = _stockRepository.Get(s => s.Symbol.ToLower() == symbol.ToLower()).FirstOrDefault();
+            if (exists is null) { 
+                var newStock = await _fmpService.FindStockBySymbolAsync(symbol);
+                await _stockRepository.CreateAsync(newStock);
+                exists = newStock;
+            } 
 
             var result = await _commentRepository.CreateAsync(
                 Comment.CreateFactory(
                     dto.Title,
                     dto.Content,
-                    dto.StockId,
+                    exists.Id,
                     dto.UserId
                     )
                 );
-            return result > -1 ? CreatedAtAction(nameof(GetById), new { id = result }) : BadRequest("Failed to create new comment");
+
+            return result > -1 ? CreatedAtAction(nameof(GetByStockSymbol), new { id = result }) : BadRequest("Failed to create new comment");
         }
 
         [HttpPut("{commentid:int}")]

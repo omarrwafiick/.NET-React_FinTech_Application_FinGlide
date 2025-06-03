@@ -27,12 +27,14 @@ namespace finglide_api.Repositories
         public async Task<IEnumerable<T>> GetAsync(Expression<Func<T, object>> include1, Expression<Func<T, object>> include2)
             => await _applicationDbContext.Set<T>().Include(include1).Include(include2).ToListAsync();
 
-      public async Task<IEnumerable<T>> GetNestedAsync<TProperty, TThenProperty>(
+        public async Task<IEnumerable<T>> GetNestedAsync<TProperty, TThenProperty>(
             Expression<Func<T, IEnumerable<TProperty>>> include,
             Expression<Func<TProperty, TThenProperty>> thenInclude)
             where TProperty : class
             => await _applicationDbContext.Set<T>().Include(include).ThenInclude(thenInclude).ToListAsync();
 
+        public IQueryable<T> Get(Expression<Func<T, bool>> condition, Expression<Func<T, object>> include1, Expression<Func<T, object>> include2)
+            => _applicationDbContext.Set<T>().Where(condition).Include(include1).Include(include2).AsQueryable();
 
         public async Task<T> GetAsync(int id)
             => await _applicationDbContext.Set<T>().FindAsync(id);
@@ -75,6 +77,5 @@ namespace finglide_api.Repositories
 
         public async Task<bool> IsExistsAsync(Expression<Func<T, bool>> condition)
             => await _applicationDbContext.Set<T>().Where(condition).AnyAsync();
-
     }
 }

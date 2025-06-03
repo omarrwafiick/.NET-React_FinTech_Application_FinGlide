@@ -1,10 +1,6 @@
-using finglide_api.Contracts;
 using finglide_api.Data;
-using finglide_api.Models;
 using finglide_api.Repositories;
-using finglide_api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -20,6 +16,10 @@ builder.Services.AddScoped(typeof(IMainRepository<>), typeof(MainRepository<>));
 builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddScoped<ITokenService, JwtTokenService>();
+
+builder.Services.AddScoped<IFMPService, FMPService>(); 
+
+builder.Services.AddHttpClient<IFMPService, FMPService>(); 
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -64,6 +64,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(c => c
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowAnyOrigin()  
+                .SetIsOriginAllowed(o => true));
 
 app.UseAuthentication();
 

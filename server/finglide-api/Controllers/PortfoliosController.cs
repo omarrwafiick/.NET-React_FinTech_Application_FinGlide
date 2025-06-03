@@ -8,14 +8,17 @@ namespace finglide_api.Controllers
     {
         private readonly IMainRepository<Portfolio> _portfolioRepository;
         private readonly IMainRepository<Stock> _stockRepository;
+        private readonly IFMPService _fmpService;
         private readonly UserManager<User> _userManager;
         public PortfoliosController(
             IMainRepository<Portfolio> portfolioRepository,
             IMainRepository<Stock> stockRepository,
+            IFMPService fmpService,
             UserManager<User> userManager)
         {
             _portfolioRepository = portfolioRepository;
             _stockRepository = stockRepository;
+            _fmpService = fmpService;
             _userManager = userManager;
         }
 
@@ -30,24 +33,26 @@ namespace finglide_api.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] PortfolioDto dto)
-        {
-            var stock = _stockRepository.Get(x => x.Symbol.ToLower() == dto.Symbol.ToLower());
-            if (!stock.Any())
-                return NotFound("Stock was not found");
-
+        {  
             var userExists = await _userManager.FindByIdAsync(dto.UserId);
             if (userExists is null)
                 return NotFound("user was not found");
 
-            var stockId = stock.ToList()[0].Id;
-            var portfolioExists = _portfolioRepository.Get(x => x.StokeId == stockId && x.UserId == dto.UserId);
+            var stock = _stockRepository.Get(s => s.Symbol == dto.Symbol).FirstOrDefault();
+            if (stock is null) { 
+                var newStock = await _fmpService.FindStockBySymbolAsync(dto.Symbol);
+                await _stockRepository.CreateAsync(newStock);
+                stock = newStock;
+            } 
+ 
+            var portfolioExists = _portfolioRepository.Get(x => x.StokeId == stock.Id && x.UserId == dto.UserId);
             if (portfolioExists.Any())
                 return BadRequest("Portfolio already exists");
 
             var result = await _portfolioRepository.CreateAsync(
                 Portfolio.CreateFactory(
                     dto.UserId,
-                    stockId
+                    stock.Id
                 )
             );
 

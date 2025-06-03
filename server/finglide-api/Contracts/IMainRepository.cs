@@ -15,6 +15,7 @@ namespace finglide_api.Contracts
             where TProperty : class;
         IQueryable<T> Get(Expression<Func<T, bool>> condition);
         Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> condition, Expression<Func<T, object>> include);
+        IQueryable<T> Get(Expression<Func<T, bool>> condition, Expression<Func<T, object>> include1, Expression<Func<T, object>> include2); 
         IQueryable<T> Get(int skip, int take);  
         Task<bool> IsExistsAsync(int id);
         Task<bool> IsExistsAsync(Expression<Func<T, bool>> condition);
