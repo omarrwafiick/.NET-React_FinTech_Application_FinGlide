@@ -15,6 +15,7 @@ import Design from '../pages/designPage/design';
 import BalanceSheet from '../components/balanceSheet/balanceSheet';
 import CashFlowStatement from '../components/cashFlowStatement/cashFlowStatement';
 import Notfound from '../pages/notfoundPage/notfound';
+import ProtectedRoutes from './protectedRoutes';
 
 const router = createBrowserRouter(
   [
@@ -28,7 +29,7 @@ const router = createBrowserRouter(
         },
         {
           path: "/design-guide",
-          element: <Design />
+          element: <ProtectedRoutes><Design /></ProtectedRoutes>
         },
         {
           path: "/forget-password",
@@ -48,11 +49,11 @@ const router = createBrowserRouter(
         },
         {
           path: "/search",
-          element: <Search />
+          element: <ProtectedRoutes><Search /></ProtectedRoutes>
         },
         {
           path: "/company/:ticker",
-          element: <Company  />,
+          element: <ProtectedRoutes><Company  /></ProtectedRoutes>,
           children:[
             {
               path:"company-profile",
@@ -74,7 +75,7 @@ const router = createBrowserRouter(
         },
         {
           path: "/portfolio",
-          element: <Portfolio />
+          element: <ProtectedRoutes><Portfolio /></ProtectedRoutes>
         },
         {
           path: "*",

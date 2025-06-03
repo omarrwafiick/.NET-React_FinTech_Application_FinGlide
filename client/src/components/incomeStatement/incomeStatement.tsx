@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useOutletContext } from 'react-router-dom';
 import { CompanyIncomeStatement } from '../../types/types';
-import { getCompanyIncomeStatementBySymbol } from '../../services/api';
+import { getCompanyIncomeStatementBySymbol } from '../../services/fmpApi';
 import toaster from 'react-hot-toast';  
 import Loader from '../loader/loader';
 import Table from '../table/table';

@@ -1,7 +1,7 @@
  
 namespace finglide_api.Controllers
 { 
-    [Route("api/finglide/accounts")]
+    [Route("api/finglide/auth")]
     [ApiController]
     public class AccountsController : Controller
     {
@@ -23,8 +23,8 @@ namespace finglide_api.Controllers
         {
             var result = await _userService.LoginAsync(dto);
             if (result is not null) {
-                Response.Cookies.Append("token", result);
-                return Ok(new { accessToken = result });
+                //Response.Cookies.Append("token", result);
+                return Ok(result);
             }
             return BadRequest("Failed to login user to the system please check your credentials");
         }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getCompanyProfileBySymbol } from '../../services/api'
+import { getCompanyProfileBySymbol } from '../../services/fmpApi'
 import { useParams } from 'react-router-dom'
 import { CompanyProfile } from '../../types/types'
 import Sidebar from '../../components/sidebar/sidebar'

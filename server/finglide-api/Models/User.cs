@@ -3,10 +3,14 @@ namespace finglide_api.Models
 {
     public class User : IdentityUser
     {
+        private User()
+        {
+            
+        }
         private User(string username, string email)
         {
             UserName = username;
-            Email = Email;
+            Email = email;
         }
         public string ResetToken { get; set; } = string.Empty;
         public DateTime ResetTokenExpiresIn = DateTime.UtcNow;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import RatioList from '../ratioList/ratioList'
 import { CompanyKeyRatios } from '../../types/types';
-import { getCompanyRatiosBySymbol } from '../../services/api'; 
+import { getCompanyRatiosBySymbol } from '../../services/fmpApi'; 
 import toaster from 'react-hot-toast'; 
 import { useOutletContext } from 'react-router-dom';
 import Loader from '../loader/loader';

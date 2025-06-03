@@ -1,7 +1,7 @@
 import React from 'react';
 import CardList from '../../components/cardlist/cardlist';
 import SearchSection from '../../components/searchSection/searchSection';
-import { searchByCompanyName } from '../../services/api';
+import { searchByCompanyName } from '../../services/fmpApi';
 import { ChangeEvent, useState } from 'react';
 import { CompanySearch } from '../../types/types';
 import toaster from 'react-hot-toast'; 

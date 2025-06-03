@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import { Outlet } from 'react-router-dom';
 import Navbar from './components/navbar/navbar'; 
 import { useLocation } from 'react-router-dom';
+import { UserProvider } from './store/useAuth';
 
 function App() {
   const location = useLocation();
@@ -17,9 +18,11 @@ function App() {
           
   return (
     <div className="w-full min-h-screen font-sora overflow-hidden"> 
-      {showNavbar && <Navbar />}
-      <Outlet /> 
-      <Toaster /> 
+      <UserProvider> 
+        {showNavbar && <Navbar />}
+        <Outlet /> 
+        <Toaster /> 
+      </UserProvider>
     </div>
   );
 }

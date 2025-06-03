@@ -8,5 +8,6 @@ namespace finglide_api.Dtos
     public record ResetPasswordDto([EmailAddress] string Email, [Required][Length(12, 12)] string Password);
     public record ForgetPasswordDto([EmailAddress] string Email);
     public record UserDto(string UserName, string Email);
+    public record LoginResponse(string UserName, string Email, string Token);
 
 }

@@ -7,13 +7,15 @@ namespace finglide_api.Data
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-        }
+        } 
         public DbSet<Stock> Stocks { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Portfolio> Portfolios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
-        {
+        { 
+            base.OnModelCreating(builder); 
+
             builder.Entity<IdentityRole>().HasData(
                 [
                     new IdentityRole {

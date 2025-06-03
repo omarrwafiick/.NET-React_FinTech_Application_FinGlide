@@ -17,16 +17,20 @@ namespace finglide_api.Services
             _tokenService = tokenService;
         }
 
-        public async Task<string?> LoginAsync(LoginDto dto)
+        public async Task<LoginResponse?> LoginAsync(LoginDto dto)
         {
             try
             {
                 var user = await _userManager.FindByEmailAsync(dto.Email);
-                if (user is null) return null;
+                if (user is null)
+                    return null;
+
                 var result = await _signinManager.CheckPasswordSignInAsync(user, dto.Password, false);
-                if (!result.Succeeded) return null;
+                if (!result.Succeeded)
+                    return null;
+
                 var role = await _userManager.GetRolesAsync(user);
-                return _tokenService.GenerateToken(user, role[0]);
+                return new LoginResponse(user.UserName, user.Email, _tokenService.GenerateToken(user, role[0]));
             }
             catch (System.Exception)
             {

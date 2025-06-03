@@ -1,3 +1,4 @@
+
 export interface CompanySearch {
   currency: string;
   exchangeShortName: string;
