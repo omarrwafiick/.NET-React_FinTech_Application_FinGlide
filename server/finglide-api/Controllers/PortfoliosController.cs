@@ -28,13 +28,13 @@ namespace finglide_api.Controllers
             var userName = User.GetUserName();
             var user = await _userManager.FindByNameAsync(userName!);
             var userPortfolio = await _portfolioRepository.GetAsync(x => x.UserId == user!.Id, i => i.Stock);
-            return userPortfolio.Any() ? Ok(userPortfolio.Select(x => x.Stock.FromStockToDto())) : NotFound("Nothing was found");
+            return userPortfolio.Any() ? Ok(userPortfolio.Select(x => x.FromPortfolioToDtoBase())) : NotFound("Nothing was found");
         }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] PortfolioDto dto)
         {  
-            var userExists = await _userManager.FindByIdAsync(dto.UserId);
+            var userExists = await _userManager.FindByEmailAsync(dto.Email);
             if (userExists is null)
                 return NotFound("user was not found");
 
@@ -45,13 +45,13 @@ namespace finglide_api.Controllers
                 stock = newStock;
             } 
  
-            var portfolioExists = _portfolioRepository.Get(x => x.StokeId == stock.Id && x.UserId == dto.UserId);
+            var portfolioExists = _portfolioRepository.Get(x => x.StokeId == stock.Id && x.UserId == userExists.Id);
             if (portfolioExists.Any())
                 return BadRequest("Portfolio already exists");
 
             var result = await _portfolioRepository.CreateAsync(
                 Portfolio.CreateFactory(
-                    dto.UserId,
+                    userExists.Id,
                     stock.Id
                 )
             );

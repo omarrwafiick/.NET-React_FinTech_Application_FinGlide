@@ -5,7 +5,7 @@ import { v4 as uuid } from 'uuid'
 
 type Props = {
   companies:CompanySearch[],
-  onPortfolioCreate: (e:SyntheticEvent) => void,
+  onPortfolioCreate: (e:SyntheticEvent, symbol:string) => void,
 }
 
 const CardList : React.FC<Props> = ({companies, onPortfolioCreate}: Props) : JSX.Element => {

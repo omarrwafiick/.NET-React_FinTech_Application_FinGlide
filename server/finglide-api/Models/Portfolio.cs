@@ -1,12 +1,10 @@
-using finglide_api.models;
-
+ 
 namespace finglide_api.Models
 {
     public class Portfolio
     {
         private Portfolio(string userId, int StokeId)
-        {
-
+        { 
         }
         public User User { get; set; }
         public string UserId { get; private set; }

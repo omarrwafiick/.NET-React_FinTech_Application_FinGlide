@@ -1,11 +1,13 @@
 import { HandleError } from "../helpers/errorHandler"; 
 import { UserProfileResponse } from "../models/user";
 
-const apiBase = "http://localhost:5167/api/finglide/";
+const apiBase = "http://localhost:5179/api/finglide/auth/";
 
 export const loginApi = async (email: string, password:string): Promise<UserProfileResponse> => {
     try {
-        const result = await axios.post<UserProfileResponse>(apiBase+"auth/login",{email, password});
+        email = sanitizeText(email);
+        password = sanitizeText(password);
+        const result = await axios.post<UserProfileResponse>(apiBase+"login",{email, password});
         return result.data;
     } catch (error) {
         HandleError(error);
@@ -13,8 +15,11 @@ export const loginApi = async (email: string, password:string): Promise<UserProf
 };
 
 export const registerApi = async (userName: string, email: string, password:string) => {
-    try {
-        const result = await axios.post(apiBase+"auth/register",{userName, email, password});
+    try {        
+        userName = sanitizeText(userName);
+        email = sanitizeText(email);
+        password = sanitizeText(password);
+        const result = await axios.post(apiBase+"register",{userName, email, password});
         return result.status;
     } catch (error) {
         HandleError(error);
@@ -23,7 +28,8 @@ export const registerApi = async (userName: string, email: string, password:stri
 
 export const forgetPasswordApi = async (email: string) : Promise<any> => {
     try {
-        const result = await axios.post(apiBase+"auth/forgetpassword",{email});
+        email = sanitizeText(email);
+        const result = await axios.post(apiBase+"forgetpassword",{email});
         return result.data;
     } catch (error) {
         HandleError(error);
@@ -32,7 +38,9 @@ export const forgetPasswordApi = async (email: string) : Promise<any> => {
 
 export const resetPasswordApi = async (resetToken: string, password:string) => {
     try {
-        const result = await axios.post(apiBase+`auth/resetpassword/${resetToken}`,{password});
+        resetToken = sanitizeText(resetToken);
+        password = sanitizeText(password);
+        const result = await axios.post(apiBase+`resetpassword/${resetToken}`,{password});
         return result.status;
     } catch (error) {
         HandleError(error);

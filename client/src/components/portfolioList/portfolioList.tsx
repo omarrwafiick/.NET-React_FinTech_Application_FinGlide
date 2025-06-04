@@ -1,9 +1,10 @@
-import React, { SyntheticEvent } from 'react'
+import React from 'react'
 import PortfolioCard from '../portfolioCard/portfolioCard'
 import { v4 as uuid } from 'uuid'
+import { Portfolio } from '../../models/portfolio'
 
 type Props = {
-    portfolio: string[]
+    portfolio: Portfolio[]
     onPortfolioRemove:(value:string) => void
 }
 
@@ -15,13 +16,13 @@ const PortfolioList = ({portfolio, onPortfolioRemove}: Props) => {
             {portfolio.length > 0 ?
                 portfolio.map((p)=>{
                     let id = uuid();
-                    return <PortfolioCard onPortfolioRemove={onPortfolioRemove} value={p} key={id} /> 
+                    return <PortfolioCard onPortfolioRemove={onPortfolioRemove} portfolio={p} key={id} /> 
                 })
                 : 
                 <h4 className=''>Nothing to show</h4>
             }
         </div> 
-    </div>
+    </div> 
   )
 }
 

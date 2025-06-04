@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { UserProfile } from "../models/user"
-import { createContext, useContext } from "react";  
+import { createContext } from "react";  
 import { useNavigate } from "react-router-dom";
 import { forgetPasswordApi, loginApi, registerApi, resetPasswordApi } from "../services/authApi";
 import toaster from 'react-hot-toast';
@@ -90,7 +90,6 @@ export const UserProvider = ({ children }:Props) =>{
         setUser(null);
         navigate("/");
     }
-
     return (
     <UserContext.Provider value={{registerUser, loginUser, user, token, logoutUser,isLoggedIn, forgetPassword, resetPassword}}>
         {isReady ? children : null}

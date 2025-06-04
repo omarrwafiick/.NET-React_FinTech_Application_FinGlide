@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 type Props = {
   id: string;
   searchResult: CompanySearch,
-  onPortfolioCreate: (e:SyntheticEvent) => void,
+  onPortfolioCreate: (e:SyntheticEvent, symbol:string) => void,
 }; 
 
 const Card : React.FC<Props> = ({ id, searchResult, onPortfolioCreate }: Props) : JSX.Element => {

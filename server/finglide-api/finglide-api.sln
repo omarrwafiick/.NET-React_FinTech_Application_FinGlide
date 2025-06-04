@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "finglide-api", "finglide-api.csproj", "{76FD9116-5361-D8C8-496C-7AAC0CE9C6BF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{76FD9116-5361-D8C8-496C-7AAC0CE9C6BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76FD9116-5361-D8C8-496C-7AAC0CE9C6BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76FD9116-5361-D8C8-496C-7AAC0CE9C6BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76FD9116-5361-D8C8-496C-7AAC0CE9C6BF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FB8FC047-2CEA-42D5-A7E9-8DA4D9F34BED}
+	EndGlobalSection
+EndGlobal

@@ -36,7 +36,7 @@ namespace finglide_api.Controllers
         [HttpPost("{symbol:alpha}")]
         public async Task<IActionResult> Create([FromRoute] string symbol, [FromBody] CreateCommentDto dto)
         {
-            var userExists = await _userManager.FindByIdAsync(dto.UserId);
+            var userExists = await _userManager.FindByEmailAsync(dto.Email);
             if (userExists is not null)
                 return NotFound("User was not found");
 
@@ -52,7 +52,7 @@ namespace finglide_api.Controllers
                     dto.Title,
                     dto.Content,
                     exists.Id,
-                    dto.UserId
+                    userExists.Id
                     )
                 );
 

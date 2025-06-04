@@ -4,8 +4,7 @@ import Home from '../pages/homePage/home';
 import ForgotPassword from '../pages/authPages/forgetPassword';
 import ResetPassword from '../pages/authPages/resetPassword';
 import Signup from '../pages/authPages/signup';
-import Login from '../pages/authPages/login';
-import Portfolio from '../pages/portfolioPage/portfolio';
+import Login from '../pages/authPages/login'; 
 import Search from '../pages/searchPage/search';
 import Company from '../pages/companyPage/company';
 import App from '../App';
@@ -72,11 +71,7 @@ const router = createBrowserRouter(
               element: <CashFlowStatement  />
             }
           ]
-        },
-        {
-          path: "/portfolio",
-          element: <ProtectedRoutes><Portfolio /></ProtectedRoutes>
-        },
+        }, 
         {
           path: "*",
           element: <Notfound />

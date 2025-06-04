@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations; 
 
 namespace finglide_api.Dtos
 {
-    public record PortfolioDto([Required] string UserId, [Required] string Symbol);
+    public record PortfolioDto([EmailAddress] string Email, [Required] string Symbol);
+    public record GetPortfolioDto(string Symbol,string CompanyName, decimal Amount, decimal LastDivided, string Industry, long MarketCapital );
 }

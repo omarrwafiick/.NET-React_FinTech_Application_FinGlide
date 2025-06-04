@@ -1,9 +1,6 @@
-
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
-using finglide_api.Contracts;
-using finglide_api.Models;
+using System.Text; 
 using Microsoft.IdentityModel.Tokens;
 
 namespace finglide_api.Services
