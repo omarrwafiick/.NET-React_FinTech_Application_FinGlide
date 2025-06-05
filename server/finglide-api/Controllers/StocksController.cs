@@ -1,4 +1,6 @@
- 
+
+using finglide_api.Sanitizers;
+
 namespace finglide_api.Controllers
 {
     [Authorize]
@@ -20,9 +22,11 @@ namespace finglide_api.Controllers
         }
 
         [HttpGet("{symbol:alpha?}/{companyname:alpha?}/{isdesc:bool}")]
-        public IActionResult GetAllBySymbol([FromQuery] string? symbol, [FromQuery] string? companyname, [FromQuery] bool isdesc = false)
+        public IActionResult GetAllBySymbol([FromQuery] string? symbol = "", [FromQuery] string? companyname = "", [FromQuery] bool isdesc = false)
         {
-            var result = _repository.Get(x => x.Symbol == symbol || x.CompanyName == companyname);
+            var result = _repository.Get(x
+                => x.Symbol.ToLower() == Sanitizer.SanitizeText(symbol!).ToLower() ||
+                x.CompanyName.ToLower() == Sanitizer.SanitizeText(companyname!).ToLower() );
 
             var data = result.Select(x => x.FromStockToDto());
 
@@ -47,6 +51,8 @@ namespace finglide_api.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateStockDto dto)
         {
+            dto = StockSanitizers.SanitizeCreateStockDto(dto);
+
             var exists = await _repository.IsExistsAsync(x=>x.CompanyName==dto.CompanyName&&x.MarketCapital == dto.MarketCapital);
             if(!exists)
                 return BadRequest("Stock already exists");

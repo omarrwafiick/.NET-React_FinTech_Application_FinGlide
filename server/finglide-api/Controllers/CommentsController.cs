@@ -1,4 +1,6 @@
- 
+
+using finglide_api.Sanitizers;
+
 namespace finglide_api.Controllers
 {
     [Authorize]
@@ -24,8 +26,9 @@ namespace finglide_api.Controllers
 
         [HttpGet("{symbol:alpha}/{isdescending:bool}")]
         public IActionResult GetByStockSymbol([FromRoute] string symbol,[FromRoute] bool isdescending)
-        {
-            var result = _commentRepository.Get(s => s.Stock!.Symbol.ToLower() == symbol.ToLower(), i => i.User, i => i.Stock!);
+        {  
+            var result = _commentRepository.Get(s
+                => s.Stock!.Symbol.ToLower() == Sanitizer.SanitizeText(symbol).ToLower(), i => i.User, i => i.Stock!);
 
             if (isdescending) result.OrderByDescending(c => c.CreatedAt);
             else result.OrderBy(c => c.CreatedAt);
@@ -38,14 +41,19 @@ namespace finglide_api.Controllers
         {
             var userExists = await _userManager.FindByEmailAsync(dto.Email);
             if (userExists is not null)
-                return NotFound("User was not found");
+                return NotFound("User was not found"); 
 
-            var exists = _stockRepository.Get(s => s.Symbol.ToLower() == symbol.ToLower()).FirstOrDefault();
-            if (exists is null) { 
+            var exists = _stockRepository.Get(s
+                => s.Symbol.ToLower() == Sanitizer.SanitizeText(symbol).ToLower()).FirstOrDefault();
+                
+            if (exists is null)
+            {
                 var newStock = await _fmpService.FindStockBySymbolAsync(symbol);
                 await _stockRepository.CreateAsync(newStock);
                 exists = newStock;
-            } 
+            }
+
+            dto = CommentSanitizers.SanitizeCreateCommentDto(dto);
 
             var result = await _commentRepository.CreateAsync(
                 Comment.CreateFactory(
@@ -65,6 +73,9 @@ namespace finglide_api.Controllers
             var comment = await _commentRepository.GetAsync(commentid);
             if(comment is null)
                 return NotFound("Nothing was found");
+
+            dto = CommentSanitizers.SanitizeUpdateCommentDto(dto);
+            
             var result = await _commentRepository.UpdateAsync(Comment.Update(comment, dto.Title, dto.Content));
             return result ? Ok("Comment was updated successfully") : BadRequest("Failed to update comment");
         }

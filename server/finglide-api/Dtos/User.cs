@@ -3,11 +3,42 @@ using System.ComponentModel.DataAnnotations;
 
 namespace finglide_api.Dtos
 {
-    public record RegisterDto([Required][Length(3, 20)] string UserName, [EmailAddress] string Email, [Required][Length(12, 12)] string Password);
-    public record LoginDto([EmailAddress] string Email, [Required] string Password);
-    public record ResetPasswordDto([EmailAddress] string Email, [Required][Length(12, 12)] string Password);
-    public record ForgetPasswordDto([EmailAddress] string Email);
+    public record RegisterDto
+    {
+        [Required]
+        [Length(3, 20)]
+        public string UserName { get; set; }
+        [EmailAddress]
+        public string Email { get; set; }
+        [Required]
+        [Length(12, 12)]
+        public string Password { get; set; }
+    };
+
+    public record LoginDto{ 
+        [EmailAddress]
+        public string Email { get; set; }
+        [Required]
+        [Length(12, 12)]
+        public string Password { get; set; }
+    };
+
+    public record ResetPasswordDto
+    {
+        [EmailAddress]
+        public string Email { get; set; }
+        [Required]
+        [Length(12, 12)]
+        public string Password { get; set; } 
+    };
+
+    public record ForgetPasswordDto
+    {
+        [EmailAddress]
+        public string Email { get; set; } 
+    };
+
     public record UserDto(string UserName, string Email);
-    public record LoginResponse(string UserName, string Email, string Token);
+    public record LoginResponse(UserDto user, string Token);
 
 }

@@ -51,8 +51,8 @@ export const UserProvider = ({ children }:Props) =>{
             if(res){
                 localStorage.setItem("token", res.token); 
                 const user = {
-                    email :res.email,
-                    userName: res.userName
+                    email :res.userDto.email,
+                    userName: res.userDto.userName
                 }
                 localStorage.setItem("user", JSON.stringify(user));
                 setToken(res.token);

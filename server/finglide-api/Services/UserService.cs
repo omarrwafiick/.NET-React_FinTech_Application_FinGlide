@@ -21,6 +21,8 @@ namespace finglide_api.Services
         {
             try
             {
+                dto.Email = Sanitizer.SanitizeText(dto.Email);
+                dto.Password = Sanitizer.SanitizeText(dto.Password);
                 var user = await _userManager.FindByEmailAsync(dto.Email);
                 if (user is null)
                     return null;
@@ -30,7 +32,7 @@ namespace finglide_api.Services
                     return null;
 
                 var role = await _userManager.GetRolesAsync(user);
-                return new LoginResponse(user.UserName, user.Email, _tokenService.GenerateToken(user, role[0]));
+                return new LoginResponse(new UserDto(user.UserName!, user.Email!), _tokenService.GenerateToken(user, role[0]));
             }
             catch (System.Exception)
             {
@@ -42,6 +44,9 @@ namespace finglide_api.Services
         {
             try
             {
+                dto.UserName = Sanitizer.SanitizeText(dto.UserName); 
+                dto.Email = Sanitizer.SanitizeText(dto.Email);
+                dto.Password = Sanitizer.SanitizeText(dto.Password);
                 var newUser = User.UserFactory(dto.UserName, dto.Email);
                 var creationResult = await _userManager.CreateAsync(newUser, dto.Password);
                 if (!creationResult.Succeeded) return false;
@@ -58,6 +63,7 @@ namespace finglide_api.Services
         {
             try
             { 
+                dto.Email = Sanitizer.SanitizeText(dto.Email);
                 var user = await _userManager.FindByEmailAsync(dto.Email);
                 if (user is null) return null; 
                 user.ResetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
@@ -66,8 +72,7 @@ namespace finglide_api.Services
                 return user.ResetToken;
             }
             catch (System.Exception)
-            {
-                
+            { 
                 throw;
             }
         }
@@ -76,6 +81,7 @@ namespace finglide_api.Services
         {
             try
             { 
+                dto.Password = Sanitizer.SanitizeText(dto.Password);
                 var user = await _userManager.FindByEmailAsync(dto.Email);
                 if (user is null || user.ResetToken != resetToken) return false;
                 await _userManager.AddPasswordAsync(user, dto.Password);
@@ -85,8 +91,7 @@ namespace finglide_api.Services
                 return true;
             }
             catch (System.Exception)
-            {
-                
+            { 
                 throw;
             }
         }

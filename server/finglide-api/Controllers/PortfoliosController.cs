@@ -1,4 +1,6 @@
 
+using finglide_api.Sanitizers;
+
 namespace finglide_api.Controllers
 {
     [Authorize]
@@ -33,9 +35,11 @@ namespace finglide_api.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] PortfolioDto dto)
-        {  
+        {
+            dto = PortfolioSanitizers.SanitizeCreatePortfolioDto(dto);
+            
             var userExists = await _userManager.FindByEmailAsync(dto.Email);
-            if (userExists is null)
+            if (userExists is null) 
                 return NotFound("user was not found");
 
             var stock = _stockRepository.Get(s => s.Symbol == dto.Symbol).FirstOrDefault();
@@ -69,7 +73,7 @@ namespace finglide_api.Controllers
             if (portfolio is null)
                 return NotFound("Nothing was found");
 
-            var stockToBeDeleted = portfolio.Where(p => p.Stock.Symbol.ToLower() == symbol.ToLower());
+            var stockToBeDeleted = portfolio.Where(p => p.Stock.Symbol.ToLower() == Sanitizer.SanitizeText(symbol).ToLower());
 
             var result = await _portfolioRepository.DeleteAsync(stockToBeDeleted.ToList()[0]);
             return result ? NoContent() : BadRequest("Failed to delete portfolio");

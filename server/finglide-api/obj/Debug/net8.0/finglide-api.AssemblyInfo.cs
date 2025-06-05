@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("finglide-api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5659df098c3bf46627667e5d7386add9b3206a16")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+63226cbd45b48e4f6ca806860564e47101e4c12c")]
 [assembly: System.Reflection.AssemblyProductAttribute("finglide-api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("finglide-api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

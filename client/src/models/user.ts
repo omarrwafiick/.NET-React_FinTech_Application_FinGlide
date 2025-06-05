@@ -1,6 +1,8 @@
 export type UserProfileResponse = {
-    userName:string;
-    email:string;
+    userDto :{ 
+        userName:string;
+        email:string;
+    }
     token: string;
 }
 

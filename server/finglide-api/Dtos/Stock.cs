@@ -6,8 +6,40 @@ namespace finglide_api.Dtos
 {
     public record GetStockBaseDto(string Symbol, string CompanyName, decimal Amount, decimal LastDivided, string Industry, long MarketCapital);
     public record GetStockDto(int Id, string Symbol, string CompanyName, decimal Amount, decimal LastDivided, string Industry, long MarketCapital, List<GetCommentDto> Comments);
-    public record CreateStockDto([Required][Length(1, 10)] string Symbol, [Required][Length(3, 20)] string CompanyName, [Required][Range(1, 1_000_000_000)] decimal Amount, [Required][Range(0.001, 100)] decimal LastDivided, [Required][Length(3, 20)] string Industry, [Required][Range(1, 5_000_000_000)] long MarketCapital);
-    public record UpdateStockDto([Required][Range(1, 1_000_000_000)] decimal Amount, [Required][Range(0.001, 100)] decimal LastDivided, [Required][Range(1, 5_000_000_000)] long MarketCapital);
+    public record CreateStockDto
+    {
+        [Required]
+        [Length(1, 10)]
+        public string Symbol { get; set; }
+        [Required]
+        [Length(3, 20)]
+        public string CompanyName { get; set; }
+        [Required]
+        [Range(1, 1_000_000_000)]
+        public decimal Amount { get; set; }
+        [Required]
+        [Range(0.001, 100)]
+        public decimal LastDivided { get; set; }
+        [Required]
+        [Length(3, 20)]
+        public string Industry { get; set; }
+        [Required]
+        [Range(1, 5_000_000_000)]
+        public long MarketCapital { get; set; }
+    };
+    
+    public record UpdateStockDto
+    {
+        [Required]
+        [Range(1, 1_000_000_000)]
+        public decimal Amount { get; set; }
+        [Required]
+        [Range(0.001, 100)]
+        public decimal LastDivided { get; set; }
+        [Required]
+        [Range(1, 5_000_000_000)]
+        public long MarketCapital { get; set; }
+    };
      
     public class FMPStock
     {
