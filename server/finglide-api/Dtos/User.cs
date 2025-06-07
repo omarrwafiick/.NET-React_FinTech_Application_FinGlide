@@ -11,15 +11,14 @@ namespace finglide_api.Dtos
         [EmailAddress]
         public string Email { get; set; }
         [Required]
-        [Length(12, 12)]
+        [Length(12, 200)]
         public string Password { get; set; }
     };
 
     public record LoginDto{ 
         [EmailAddress]
         public string Email { get; set; }
-        [Required]
-        [Length(12, 12)]
+        [Required] 
         public string Password { get; set; }
     };
 
@@ -28,7 +27,7 @@ namespace finglide_api.Dtos
         [EmailAddress]
         public string Email { get; set; }
         [Required]
-        [Length(12, 12)]
+        [Length(12, 200)]
         public string Password { get; set; } 
     };
 

@@ -7,7 +7,7 @@ namespace finglide_api.Contracts
     {
         Task<bool> RegisterAsync(RegisterDto dto);
         Task<LoginResponse> LoginAsync(LoginDto dto);
-        Task<string> ForgetPasswordAsync(ForgetPasswordDto dto);
-        Task<bool> ResetPasswordAsync(string resetToken, ResetPasswordDto dto);
+        Task<bool> ForgetPasswordAsync(ForgetPasswordDto dto);
+        Task<bool> ResetPasswordAsync(ResetPasswordDto dto);
     }
 }

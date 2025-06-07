@@ -1,7 +1,4 @@
-using finglide_api.Contracts;
-using finglide_api.Dtos;
-using finglide_api.Models;
-using Microsoft.AspNetCore.Identity;
+ 
 
 namespace finglide_api.Services
 {
@@ -59,17 +56,14 @@ namespace finglide_api.Services
             }
         }
 
-        public async Task<string?> ForgetPasswordAsync(ForgetPasswordDto dto)
+        public async Task<bool> ForgetPasswordAsync(ForgetPasswordDto dto)
         {
             try
             { 
                 dto.Email = Sanitizer.SanitizeText(dto.Email);
                 var user = await _userManager.FindByEmailAsync(dto.Email);
-                if (user is null) return null; 
-                user.ResetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
-                user.ResetTokenExpiresIn = DateTime.UtcNow.AddHours(1);
-                await _userManager.UpdateAsync(user);
-                return user.ResetToken;
+                if (user is null) return false;  
+                return true;
             }
             catch (System.Exception)
             { 
@@ -77,17 +71,22 @@ namespace finglide_api.Services
             }
         }
 
-        public async Task<bool> ResetPasswordAsync(string resetToken, ResetPasswordDto dto)
+        public async Task<bool> ResetPasswordAsync(ResetPasswordDto dto)
         {
             try
             { 
                 dto.Password = Sanitizer.SanitizeText(dto.Password);
                 var user = await _userManager.FindByEmailAsync(dto.Email);
-                if (user is null || user.ResetToken != resetToken) return false;
-                await _userManager.AddPasswordAsync(user, dto.Password);
-                user.ResetToken = string.Empty;
-                user.ResetTokenExpiresIn = DateTime.UtcNow;
-                await _userManager.UpdateAsync(user);
+                if (user is null)
+                    return false;
+
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+                var result = await _userManager.ResetPasswordAsync(user, token, dto.Password);
+
+                if (!result.Succeeded)
+                    return false;
+  
                 return true;
             }
             catch (System.Exception)

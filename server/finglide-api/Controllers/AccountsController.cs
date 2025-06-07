@@ -33,13 +33,13 @@ namespace finglide_api.Controllers
         public async Task<IActionResult> ForgetPassword([FromBody] ForgetPasswordDto dto)
         {
             var result = await _userService.ForgetPasswordAsync(dto);
-            return result is not null ? Ok(result) : BadRequest("Failed to identify user in the system");
+            return result ? Ok("Email is confirmed") : BadRequest("Failed to identify user in the system");
         }
 
-        [HttpPost("resetpassword/{resettoken}")]
-        public async Task<IActionResult> ResetPassword([FromRoute] string resettoken, [FromBody] ResetPasswordDto dto)
+        [HttpPost("resetpassword")]
+        public async Task<IActionResult> ResetPassword( [FromBody] ResetPasswordDto dto)
         {
-            var result = await _userService.ResetPasswordAsync(resettoken, dto);
+            var result = await _userService.ResetPasswordAsync(dto);
             return result ? Ok("User password was reset successfully") : BadRequest("Failed to reset user password");
         }
     }

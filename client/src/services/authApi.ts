@@ -31,17 +31,16 @@ export const forgetPasswordApi = async (email: string) : Promise<any> => {
     try {
         email = sanitizeText(email);
         const result = await axios.post(apiBase+"forgetpassword",{email});
-        return result.data;
+        return result.status;
     } catch (error) {
         HandleError(error);
     }
 };
 
-export const resetPasswordApi = async (resetToken: string, password:string) => {
-    try {
-        resetToken = sanitizeText(resetToken);
+export const resetPasswordApi = async (password:string) => {
+    try { 
         password = sanitizeText(password);
-        const result = await axios.post(apiBase+`resetpassword/${resetToken}`,{password});
+        const result = await axios.post(apiBase+`resetpassword`,{password});
         return result.status;
     } catch (error) {
         HandleError(error);

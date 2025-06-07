@@ -67,7 +67,7 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
     options.Password.RequiredUniqueChars = 3;
     options.Password.RequireNonAlphanumeric = true;
     options.Password.RequiredLength = 12;
-}).AddEntityFrameworkStores<ApplicationDbContext>();
+}).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
 builder.Services.AddAuthentication(options =>
 {

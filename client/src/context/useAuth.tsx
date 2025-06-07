@@ -11,9 +11,10 @@ export type UserContextType = {
     registerUser:(email:string, userName:string, password:string) => void;
     loginUser:(email:string, password:string) => void;
     forgetPassword:(email:string) => void;
-    resetPassword:(token:string, password:string) => void;
+    resetPassword:(password:string) => void;
     logoutUser:() => void;
     isLoggedIn:() => boolean;
+    isConfirmed:() => boolean;
 }
 
 type Props = {children :React.ReactNode}
@@ -25,6 +26,7 @@ export const UserProvider = ({ children }:Props) =>{
     const [token, setToken] = useState<string|null>(null);
     const [user, setUser] = useState<UserProfile|null>(null);
     const [isReady, setIsReady] = useState<boolean>(false);
+    const [confirmed, setConfirmed] = useState<boolean>(false);
 
     useEffect(()=>{
         const user = localStorage.getItem("user");
@@ -65,16 +67,17 @@ export const UserProvider = ({ children }:Props) =>{
 
     const forgetPassword = async (email:string)=>{
         await forgetPasswordApi(email).then((res)=>{
-            if(res){ 
+            if(res >= 200){ 
+                setConfirmed(true);
                 toaster.success("Logged in successfully");
                 navigate(`/reset-password/${res.result}`);
             }
         }).catch(()=>toaster.error("Network error occured"));
     }
 
-    const resetPassword = async (token:string, password:string)=>{
-        await resetPasswordApi(token, password).then((res)=>{
-            if(res){ 
+    const resetPassword = async (password:string)=>{
+        await resetPasswordApi(password).then((res)=>{
+            if(res >= 200){ 
                 toaster.success("Password was reseted successfully");
                 navigate("/login");
             }
@@ -82,6 +85,8 @@ export const UserProvider = ({ children }:Props) =>{
     }
 
     const isLoggedIn = ()=> !!user;
+
+    const isConfirmed = ()=> confirmed;
 
     const logoutUser = ()=> {
         localStorage.removeItem("token");
@@ -91,7 +96,7 @@ export const UserProvider = ({ children }:Props) =>{
         navigate("/");
     }
     return (
-    <UserContext.Provider value={{registerUser, loginUser, user, token, logoutUser,isLoggedIn, forgetPassword, resetPassword}}>
+    <UserContext.Provider value={{registerUser, loginUser, user, token, logoutUser,isLoggedIn, forgetPassword, resetPassword, isConfirmed}}>
         {isReady ? children : null}
     </UserContext.Provider>)
 }

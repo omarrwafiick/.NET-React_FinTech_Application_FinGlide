@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Home from '../pages/homePage/home';
 import ForgotPassword from '../pages/authPages/forgetPassword';
@@ -14,7 +14,9 @@ import Design from '../pages/designPage/design';
 import BalanceSheet from '../components/balanceSheet/balanceSheet';
 import CashFlowStatement from '../components/cashFlowStatement/cashFlowStatement';
 import Notfound from '../pages/notfoundPage/notfound';
-import ProtectedRoutes from './protectedRoutes';
+import ProtectedRoutes from './protectedRoutes'; 
+import IsConfirmedGuard from './isConfirmedGuard';
+
 
 const router = createBrowserRouter(
   [
@@ -35,8 +37,9 @@ const router = createBrowserRouter(
           element: <ForgotPassword />
         },
         {
-          path: "/reset-password/:token",
-          element: <ResetPassword />
+
+          path: "/reset-password",
+          element: <IsConfirmedGuard><ResetPassword /></IsConfirmedGuard>
         },
         {
           path: "/signup",

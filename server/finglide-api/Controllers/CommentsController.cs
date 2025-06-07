@@ -40,7 +40,7 @@ namespace finglide_api.Controllers
         public async Task<IActionResult> Create([FromRoute] string symbol, [FromBody] CreateCommentDto dto)
         {
             var userExists = await _userManager.FindByEmailAsync(dto.Email);
-            if (userExists is not null)
+            if (userExists is null)
                 return NotFound("User was not found"); 
 
             var exists = _stockRepository.Get(s
@@ -60,11 +60,11 @@ namespace finglide_api.Controllers
                     dto.Title,
                     dto.Content,
                     exists.Id,
-                    userExists.Id
+                    userExists!.Id
                     )
                 );
 
-            return result > -1 ? CreatedAtAction(nameof(GetByStockSymbol), new { id = result }) : BadRequest("Failed to create new comment");
+            return result > -1 ? Ok(new { id = result }) : BadRequest("Failed to create new comment");
         }
 
         [HttpPut("{commentid:int}")]

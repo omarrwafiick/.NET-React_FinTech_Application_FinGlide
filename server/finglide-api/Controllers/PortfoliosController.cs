@@ -49,7 +49,7 @@ namespace finglide_api.Controllers
                 stock = newStock;
             } 
  
-            var portfolioExists = _portfolioRepository.Get(x => x.StokeId == stock.Id && x.UserId == userExists.Id);
+            var portfolioExists = _portfolioRepository.Get(x => x.StokeId == stock.Id && x.UserId == userExists.Id).ToList();
             if (portfolioExists.Any())
                 return BadRequest("Portfolio already exists");
 
@@ -60,7 +60,7 @@ namespace finglide_api.Controllers
                 )
             );
 
-            return result > -1 ? CreatedAtAction(nameof(GetUserPortfolio), new { id = result }) : BadRequest("Failed to create new comment");
+            return result > -1 ? Ok( new { id = result }) : BadRequest("Failed to create new portfolio");
         }
     
         [HttpDelete("{symbol:alpha}")]

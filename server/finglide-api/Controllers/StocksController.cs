@@ -21,19 +21,22 @@ namespace finglide_api.Controllers
             return result.Any() ? Ok(result.Select(x => x.FromStockToDto())) : NotFound("Nothing was found");
         }
 
-        [HttpGet("{symbol:alpha?}/{companyname:alpha?}/{isdesc:bool}")]
-        public IActionResult GetAllBySymbol([FromQuery] string? symbol = "", [FromQuery] string? companyname = "", [FromQuery] bool isdesc = false)
+        [HttpGet("/filter")]
+        public IActionResult GetAllBySymbol([FromQuery] string symbol, [FromQuery] string companyname , [FromQuery] bool isdesc = false)
         {
+            symbol = Sanitizer.SanitizeText(symbol ?? "").ToLower();
+            companyname = Sanitizer.SanitizeText(companyname ?? "").ToLower();
+            
             var result = _repository.Get(x
-                => x.Symbol.ToLower() == Sanitizer.SanitizeText(symbol!).ToLower() ||
-                x.CompanyName.ToLower() == Sanitizer.SanitizeText(companyname!).ToLower() );
+                => x.Symbol.ToLower() == symbol.ToLower() &&
+                x.CompanyName.ToLower() == companyname.ToLower() ).ToList();
 
             var data = result.Select(x => x.FromStockToDto());
 
             return result.Any() ? Ok(isdesc ? data.OrderByDescending(x => x.Amount) : data.OrderBy(x => x.Amount)) : NotFound("Nothing was found");
         } 
 
-        [HttpGet("{page:int}/{size:int}")]
+        [HttpGet("/pagination")]
         public IActionResult GetAllPaginated([FromQuery] int page = 1, [FromQuery] int size = 20) 
         {
             var result = _repository.Get((page - 1) * size, size);
@@ -54,7 +57,7 @@ namespace finglide_api.Controllers
             dto = StockSanitizers.SanitizeCreateStockDto(dto);
 
             var exists = await _repository.IsExistsAsync(x=>x.CompanyName==dto.CompanyName&&x.MarketCapital == dto.MarketCapital);
-            if(!exists)
+            if(exists)
                 return BadRequest("Stock already exists");
 
             var result = await _repository.CreateAsync(
@@ -66,7 +69,7 @@ namespace finglide_api.Controllers
                     dto.Industry,
                     dto.MarketCapital)
                 );
-            return result > -1 ? CreatedAtAction(nameof(GetById), new {id = result}) : BadRequest("Failed to create new stock");
+            return result > -1 ? Ok(new {id = result}) : BadRequest("Failed to create new stock");
         }
 
         [HttpPut("{stockid:int}")]
