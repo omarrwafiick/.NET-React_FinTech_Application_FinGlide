@@ -5,7 +5,7 @@ type Props = {}
 
 const Home = (props: Props) => { 
   return (
-    <div> 
+    <div className='flex justify-center items-center w-full min-h-screen'> 
         <Hero /> 
     </div>
   )

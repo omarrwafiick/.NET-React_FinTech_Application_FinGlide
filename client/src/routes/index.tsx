@@ -52,7 +52,7 @@ const router = createBrowserRouter(
         },
         {
           path: "/company/:ticker",
-          element: <ProtectedRoutes><Company  /></ProtectedRoutes>,
+          element: <ProtectedRoutes><Company  /></ProtectedRoutes>, 
           children:[
             {
               path:"company-profile",

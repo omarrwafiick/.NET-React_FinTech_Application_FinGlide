@@ -10,7 +10,7 @@ const Table = ({ data }: Props) => {
   const headers = Object.keys(data[0]);
 
   return (
-    <table className="table-auto border-collapse border border-gray-300 w-full">
+    <table className="table-auto border-collapse border  border-gray-300 w-full">
       <thead>
         <tr>
           {headers.map((header, i) => (

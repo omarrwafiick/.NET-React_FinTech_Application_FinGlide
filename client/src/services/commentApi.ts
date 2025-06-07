@@ -1,5 +1,6 @@
 import { HandleError } from "../helpers/errorHandler";   
 import { Comment } from "../models/comment";
+import { sanitizeText } from "./sanitizer";
 
 const apiBase = "http://localhost:5179/api/finglide/comments";
 

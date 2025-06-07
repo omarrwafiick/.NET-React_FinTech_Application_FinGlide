@@ -1,4 +1,4 @@
-function sanitizeText(input:string) {
+export const sanitizeText = (input:string) => {
   return input
     .replace(/['"`\\;]/g, '')       
     .replace(/<[^>]*>?/gm, '')       

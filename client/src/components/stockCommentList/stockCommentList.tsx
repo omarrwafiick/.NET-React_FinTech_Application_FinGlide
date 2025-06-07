@@ -8,7 +8,7 @@ type Props = {
 
 const StockCommentList = ({comments}: Props) => {
   return (
-    <div>
+    <div className=''>
         {
             comments ?  
             comments.map((c, i)=>{

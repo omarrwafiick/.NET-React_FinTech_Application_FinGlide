@@ -2,8 +2,8 @@ import React, { useContext, useState } from 'react'
 import Input from '../../components/form/input'
 import Button from '../../components/form/button'
 import Logo from '../../assets/images/logo.png'
-import { UserContext, UserContextType } from '../../store/useAuth'
-import { useParams } from 'react-router-dom'
+import { UserContext, UserContextType } from '../../context/useAuth'
+import { useParams } from "react-router-dom";
 import toaster from 'react-hot-toast';
 
 type Props = {}
@@ -13,10 +13,10 @@ const ResetPassword = (props: Props) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [disable, setDisable] = useState(false);
   const { resetPassword } = useContext<UserContextType>(UserContext);
-
+  const { token } = useParams();
+  
   const handleResetPassword= async (e) => {
     e.preventDefault();  
-    const { token } = useParams();
     setDisable(true);
     if(password === confirmPassword){  
       await resetPassword(token, password);

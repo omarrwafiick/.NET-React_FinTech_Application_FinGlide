@@ -1,11 +1,22 @@
+export const HandleError = (errors: any) => {
+  if (errors?.status === 401) {
+    console.error("User is unauthorized");
+    window.history.pushState({}, "Login", "/login");
+  }
  
-export const HandleError = (errors:any)=>{
-    if(errors.status == 401){
-        console.error("User is authorized");
-        window.history.pushState({},"Login", "/login")
-    }
-    errors.forEach(error => {  
-        console.error(error);
+  if (Array.isArray(errors)) {
+    errors.forEach((error) => {
+      console.error(error);
     });
-    return errors;
-}
+  } 
+  
+  else if (typeof errors === 'object' && errors !== null) {
+    console.error("Error:", errors.message || JSON.stringify(errors));
+  } 
+ 
+  else {
+    console.error("Unknown error:", errors);
+  }
+
+  return errors;
+};

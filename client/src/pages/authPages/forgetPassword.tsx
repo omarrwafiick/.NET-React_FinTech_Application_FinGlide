@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import Input from '../../components/form/input' 
 import Button from '../../components/form/button'
 import Logo from '../../assets/images/logo.png'
-import { UserContext, UserContextType } from '../../store/useAuth'
+import { UserContext, UserContextType } from '../../context/useAuth'
 type Props = {}
 
 const ForgetPassword = (props: Props) => {

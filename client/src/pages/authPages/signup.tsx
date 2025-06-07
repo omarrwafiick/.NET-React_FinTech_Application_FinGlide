@@ -3,7 +3,7 @@ import Input from '../../components/form/input'
 import { Link } from 'react-router-dom'
 import Button from '../../components/form/button'
 import Logo from '../../assets/images/logo.png'
-import { UserContext, UserContextType } from '../../store/useAuth'
+import { UserContext, UserContextType } from '../../context/useAuth'
 import toaster from 'react-hot-toast';
 
 const Signup = () => { 

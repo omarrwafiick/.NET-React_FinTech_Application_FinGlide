@@ -3,7 +3,7 @@ import Logo from '../../assets/images/logo.png'
 import Input from '../../components/form/input'
 import Button from '../../components/form/button'
 import { Link } from 'react-router-dom'
-import { UserContext, UserContextType } from '../../store/useAuth'
+import { UserContext, UserContextType } from '../../context/useAuth'
  
 const Login = () => { 
   const [email, setEmail] = useState("");

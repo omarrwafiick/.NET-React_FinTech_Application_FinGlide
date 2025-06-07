@@ -4,7 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import { Outlet } from 'react-router-dom';
 import Navbar from './components/navbar/navbar'; 
 import { useLocation } from 'react-router-dom';
-import { UserProvider } from './store/useAuth';
+import { UserProvider } from './context/useAuth';
 
 function App() {
   const location = useLocation();

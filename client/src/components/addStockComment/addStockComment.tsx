@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import Button from '../form/button'
 import { CreateCommentApi } from '../../services/commentApi'
 import Input from '../form/input'
-import { UserContext, UserContextType } from '../../store/useAuth'
+import { UserContext, UserContextType } from '../../context/useAuth'
 import toaster from 'react-hot-toast';
 
 type Props = {
@@ -28,10 +28,10 @@ const AddStockComment = ({ticker}: Props) => {
     setDisable(false);
   }
   return (
-    <div>
+    <div className='w-7/12 mb-6'>
         <form onSubmit={submitComment}>  
-            <Input type='text' value={title} onChange={(e)=> setTitle(e.target.value)} />
-            <textarea value={content} onChange={(e)=> setContent(e.target.value)} required placeholder='Write a comment...' rows={6} className='text-sm w-full h-10 px-4 mt-6 border-2 border-[#34AFFB]/70 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#37FB34] placeholder-gray-400 transition duration-200'/>
+            <Input placeholder='Title' type='text' value={title} onChange={(e)=> setTitle(e.target.value)} />
+            <textarea value={content} onChange={(e)=> setContent(e.target.value)} required placeholder='Write a comment...' rows={6} className='text-sm w-full p-3 mt-6 border-2 border-[#34AFFB]/70 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#37FB34] placeholder-gray-400 transition duration-200'/>
             <Button disable={disable} title='comment' type='submit'/>
         </form>
     </div>

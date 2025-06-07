@@ -10,7 +10,7 @@ type Props = {}
 
 const BalanceSheet = (props: Props) => {
   const ticker = useOutletContext<string>();
-  const [companyData,setCompanyData] = useState<CompanyBalanceSheet[]>();
+  const [companyData,setCompanyData] = useState<CompanyBalanceSheet[]>([]);
 
   useEffect(() => {
     const data = async ()=>{
@@ -26,9 +26,9 @@ const BalanceSheet = (props: Props) => {
   },[]); 
   
   return (
-    <div> 
+    <div className='overflow-auto'> 
       { 
-        companyData ? 
+        companyData?.length > 0 ? 
         <Table data={companyData} />
         :
         <Loader />

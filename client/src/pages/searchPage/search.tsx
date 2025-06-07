@@ -8,7 +8,7 @@ import toaster from 'react-hot-toast';
 import PortfolioList from '../../components/portfolioList/portfolioList';
 import { Portfolio } from '../../models/portfolio';
 import { CreatePortfolioApi, DeletePortfolioApi, GetPortfolioApi } from '../../services/portfolio';
-import { UserContext, UserContextType } from '../../store/useAuth'; 
+import { UserContext, UserContextType } from '../../context/useAuth'; 
 
 const Search = () => {
   const { user } = useContext<UserContextType>(UserContext);
@@ -20,7 +20,7 @@ const Search = () => {
   useEffect(()=>{
     const portfolioData = async ()=>{
     const result = await GetPortfolioApi();
-      if(result.length>0){ 
+      if(result.length > 0){ 
         setPortfolio(result);
       }
       else{

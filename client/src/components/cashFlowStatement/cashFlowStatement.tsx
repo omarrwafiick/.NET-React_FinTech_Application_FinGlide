@@ -25,9 +25,9 @@ const CashFlowStatement = (props: Props) => {
   },[]); 
   
   return (
-    <div> 
+    <div className='overflow-auto'> 
       { 
-        companyData ? 
+        companyData?.length > 0 ? 
         <Table data={companyData} />
         :
         <Loader />

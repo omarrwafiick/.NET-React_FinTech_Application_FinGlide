@@ -31,9 +31,9 @@ const IncomeStatement = (props: Props) => {
   // }));
   
   return (
-    <div> 
-      { 
-        companyData ? 
+    <div className='overflow-auto'> 
+      {  
+        companyData?.length > 0  ? 
         <Table data={companyData} />
         :
         <Loader />
