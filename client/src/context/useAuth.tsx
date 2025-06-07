@@ -78,6 +78,7 @@ export const UserProvider = ({ children }:Props) =>{
     const resetPassword = async (password:string)=>{
         await resetPasswordApi(password).then((res)=>{
             if(res >= 200){ 
+                setConfirmed(false);
                 toaster.success("Password was reseted successfully");
                 navigate("/login");
             }

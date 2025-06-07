@@ -6,9 +6,9 @@ namespace finglide_api.Dtos
     public record GetCommentDetailsDto(int Id, string Title, string Content, DateTime CreatedAt, GetStockBaseDto Stock);
     public class CreateCommentDto
     {
-        [Required][Length(5, 280)]
+        [Required][Length(3, 280)]
         public string Title { get; set; }
-        [Required][Length(20, 2080)]  
+        [Required][Length(3, 2080)]  
         public string Content  { get; set; }
         [EmailAddress]
         public string Email  { get; set; }
@@ -16,9 +16,9 @@ namespace finglide_api.Dtos
     public class UpdateCommentDto
     {
         [Required]
-        [Length(5, 280)]
+        [Length(3, 280)]
         public string Title { get; set; }
-        [Required][Length(20, 2080)]  
+        [Required][Length(3, 2080)]  
         public string Content  { get; set; } 
     }
 }

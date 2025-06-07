@@ -6,7 +6,7 @@ namespace finglide_api.Dtos
     public record RegisterDto
     {
         [Required]
-        [Length(3, 20)]
+        [Length(3, 30)]
         public string UserName { get; set; }
         [EmailAddress]
         public string Email { get; set; }
