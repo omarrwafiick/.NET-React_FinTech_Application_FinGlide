@@ -19,14 +19,14 @@ const Navbar = () => {
                 <img className='h-12' src={Logo} alt="logo" />
                 <h3 className='text-2xl ms-1 font-semibold'>FinGlide</h3>
               </Link> 
-              <Link to='/' className='ms-12 capitalize text-md font-medium opacity-60'>home</Link>
-              <Link to='/search' className='ms-6 capitalize text-md font-medium opacity-60'>search</Link>
+              <Link to='/' className='ms-12 capitalize text-md font-medium opacity-80'>home</Link>
+              <Link to='/search' className='ms-6 capitalize text-md font-medium opacity-80'>search</Link>
             </div> 
             <div>
               {isLoggedIn() ? (
                 <> 
-                  <span className='text-xl opacity-75'>
-                    welcome <span className='font-semibold opacity-90'>{user.userName}</span>
+                  <span className='text-lg opacity-90 me-4'>
+                    <a className='capitalize'>welcome : </a> <span className='font-semibold opacity-85'>{user.userName}</span>
                   </span>
                   <RegularButton onClick={logoutUser} navigateTo='/login' title="logout" variant='outline' />
                 </>

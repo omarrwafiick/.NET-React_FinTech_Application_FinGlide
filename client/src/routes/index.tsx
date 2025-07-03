@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Home from '../pages/homePage/home';
 import ForgotPassword from '../pages/authPages/forgetPassword';
@@ -55,23 +55,23 @@ const router = createBrowserRouter(
         },
         {
           path: "/company/:ticker",
-          element: <ProtectedRoutes><Company  /></ProtectedRoutes>, 
+          element: <ProtectedRoutes><Company /></ProtectedRoutes>, 
           children:[
             {
               path:"company-profile",
-              element: <CompanyProfile  /> 
+              element: <CompanyProfile /> 
             },
             {
               path:"income-statement",
-              element: <IncomeStatement  />
+              element: <IncomeStatement />
             },
             {
               path:"balance-sheet",
-              element: <BalanceSheet  /> 
+              element: <BalanceSheet /> 
             },
             {
               path:"cashflow-statement",
-              element: <CashFlowStatement  />
+              element: <CashFlowStatement />
             }
           ]
         }, 

@@ -1,4 +1,4 @@
-import { HandleError } from "../helpers/errorHandler";
+import { HandleError } from "../helpers/errorHandler"; 
 import { 
     CompanyBalanceSheet, 
     CompanyCashFlow,
@@ -6,22 +6,20 @@ import {
     CompanyKeyRatios, 
     CompanyProfile, 
     CompanySearch } from "../types/types";
-import axios from 'axios';
-
-export interface SearchResponse {
-    data: CompanySearch[];
-};
+import axios from 'axios'; 
+ 
 
 const apiBase = "https://financialmodelingprep.com/stable/";
 
 const key = process.env.REACT_APP_FIN_API_KEY
 
-export const searchByCompanyName = async (name:string) : Promise<SearchResponse|string> =>{
-    try {
-       const result = await axios.get<SearchResponse>(`${apiBase}search-name?query=${name}&apikey=${key}`);
-       return result.data;
+export const searchByCompanyName = async (name:string) : Promise<CompanySearch[]|string> =>{
+    try { 
+       const result = await axios.get<CompanySearch[]>(`${apiBase}search-name?query=${name}&apikey=${key}`);
+
+       return result.data; 
     } catch (error:any) {
-        HandleError(error);
+        HandleError(error.message);
     }
 };
 

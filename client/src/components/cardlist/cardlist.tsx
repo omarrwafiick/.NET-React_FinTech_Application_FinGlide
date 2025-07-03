@@ -10,7 +10,7 @@ type Props = {
 
 const CardList : React.FC<Props> = ({companies, onPortfolioCreate}: Props) : JSX.Element => {
   return (
-    <div className='flex'> 
+    <div className='grid grid-cols-4 gap-12 w-9/12'> 
         {
           companies?.map((c:CompanySearch)=>{
             let id = uuid();

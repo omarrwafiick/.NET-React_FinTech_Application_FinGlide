@@ -1,6 +1,6 @@
 import { HandleError } from "../helpers/errorHandler";    
 import { Portfolio } from "../models/portfolio";
-
+import axios from "axios";
 const apiBase = "http://localhost:5179/api/finglide/portfolios";
 
 export const CreatePortfolioApi = async (symbol:string, email:string) => {

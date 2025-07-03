@@ -51,7 +51,7 @@ const Login = () => {
           <Input placeholder='Password' value={password} onChange={(e)=> setPassword(e.target.value)} type='password' /> 
           <span ref={passwordRef} className="min-h-[1.25rem] text-red-500 text-sm mt-2 mb-1 w-full"></span>
            
-          <Link to='/forget-password' className="capitalize text-sm mt-4 text-start w-full opacity-70">forget password?</Link>
+          <Link to='/forget-password' className="capitalize text-sm mb-4 text-start w-full opacity-70">forget password?</Link>
           <Button disable={disable}  type='submit' title='login' />
           <div className="text-sm mt-6 text-center w-full opacity-70">Not a member?<Link to='/signup' className='txt-primary'> signup</Link></div>
         </form> 

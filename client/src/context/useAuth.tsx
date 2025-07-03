@@ -4,6 +4,7 @@ import { createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { forgetPasswordApi, loginApi, registerApi, resetPasswordApi } from "../services/authApi";
 import toaster from 'react-hot-toast';
+import axios from "axios"; 
 
 export type UserContextType = {
     user: UserProfile | null;
@@ -45,16 +46,16 @@ export const UserProvider = ({ children }:Props) =>{
                 toaster.success("Account was created successfully");
                 navigate("/login");
             }
-        }).catch(()=>toaster.error("Network error occured"));
+        }).catch((error)=>toaster.error(error.message));
     }
 
-    const loginUser = async (email:string, password:string)=>{
+    const loginUser = async (email:string, password:string)=>{ 
         await loginApi(email, password).then((res)=>{
-            if(res){
+            if(res){ 
                 localStorage.setItem("token", res.token); 
                 const user = {
-                    email :res.userDto.email,
-                    userName: res.userDto.userName
+                    email :res.user.email,
+                    userName: res.user.userName
                 }
                 localStorage.setItem("user", JSON.stringify(user));
                 setToken(res.token);
@@ -62,27 +63,30 @@ export const UserProvider = ({ children }:Props) =>{
                 toaster.success("Logged in successfully");
                 navigate("/search");
             }
-        }).catch(()=>toaster.error("Network error occured"));
+        }).catch((error)=>toaster.error(error.message));
     }
 
-    const forgetPassword = async (email:string)=>{
+    const forgetPassword = async (email:string)=>{ 
         await forgetPasswordApi(email).then((res)=>{
             if(res >= 200){ 
                 setConfirmed(true);
-                toaster.success("Logged in successfully");
-                navigate(`/reset-password/${res.result}`);
+                localStorage.setItem("verified-email", email);
+                toaster.success("Email was confirmed in successfully");
+                navigate('/reset-password');
             }
-        }).catch(()=>toaster.error("Network error occured"));
+        }).catch((error)=>toaster.error(error.message));
     }
 
     const resetPassword = async (password:string)=>{
-        await resetPasswordApi(password).then((res)=>{
+        let email = localStorage.getItem("verified-email");
+        await resetPasswordApi(email, password).then((res)=>{
             if(res >= 200){ 
                 setConfirmed(false);
+                localStorage.removeItem("verified-email");
                 toaster.success("Password was reseted successfully");
                 navigate("/login");
             }
-        }).catch(()=>toaster.error("Network error occured"));
+        }).catch((error)=>toaster.error(error.message));
     }
 
     const isLoggedIn = ()=> !!user;
@@ -96,6 +100,7 @@ export const UserProvider = ({ children }:Props) =>{
         setUser(null);
         navigate("/");
     }
+    
     return (
     <UserContext.Provider value={{registerUser, loginUser, user, token, logoutUser,isLoggedIn, forgetPassword, resetPassword, isConfirmed}}>
         {isReady ? children : null}

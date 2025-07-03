@@ -9,9 +9,9 @@ const Hero = (props: Props) => {
   return (
     <div className='flex justify-center items-center h-full w-full'>
       <div className='flex justify-center items-start w-9/12 h-full'>
-        <div className='flex flex-col justify-center items-center w-6/12 mt-12'>
-          <h1 className='text-6xl font-semibold'>Financial data without news.</h1>
-          <p className='text-xl mt-7 opacity-75 leading-14'>Searh relevant financial documents without fear mongering and fake news.</p>
+        <div className='flex flex-col justify-center items-start w-6/12 mt-12'>
+          <h1 className='text-7xl font-semibold mt-6'>Financial data without news.</h1>
+          <p className='text-lg mt-7 w-10/12 opacity-75 leading-7'>Searh relevant financial documents without fear mongering and fake news.</p>
           <div className='w-full flex justify-start mt-6'><RegularButton style='px-6!' navigateTo='/signup' title='get started 🡢' /></div> 
           <div className="flex justify-start items-center w-full space-x-6 mt-6">
             <a

@@ -1,5 +1,5 @@
 export type UserProfileResponse = {
-    userDto :{ 
+    user :{ 
         userName:string;
         email:string;
     }

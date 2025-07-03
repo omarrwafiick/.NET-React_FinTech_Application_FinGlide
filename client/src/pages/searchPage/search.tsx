@@ -15,7 +15,7 @@ const Search = () => {
   const [search, setSearch] = useState<string>("");
   const [portfolio, setPortfolio] = useState<Portfolio[]>([]);
   const [error, setError] = useState<string>("");
-  const [searchResult, setSearchResult] = useState<CompanySearch[] | string>([]);
+  const [searchResult, setSearchResult] = useState<any[]>([]);
 
   useEffect(()=>{
     const portfolioData = async ()=>{
@@ -62,27 +62,28 @@ const Search = () => {
     }
   }
 
-  const hitSearchInput = async (e: ChangeEvent<HTMLInputElement>) => {
+  const hitSearchInput = async (e: ChangeEvent<HTMLInputElement>) => { 
     setSearch(e.target.value);
   }; 
 
   const hitSearchButton = async ()=>{ 
-    await getCompany();
-  }
-
-  const getCompany = async ()=>{
+    if(search.length <= 0) {
+      return;
+    }
     const result = await searchByCompanyName(search);
     if(typeof result === 'string'){
       setError(result) 
       toaster.error(`Error : ${error}`); 
     }
-    else{
-     setSearchResult(result?.data); 
+    else{ 
+      console.log(result[0])
+      setSearchResult(result); 
     }
   }
+ 
 
   return (
-    <div className='w-full flex flex-col justify-center items-center'> 
+    <div className='w-full flex flex-col justify-center mt-12 items-center'> 
         <SearchSection onClick={hitSearchButton} onChange={hitSearchInput} value={search} />
         {error && <>{error}</>}
         <PortfolioList onPortfolioRemove={onPortfolioRemove} portfolio={portfolio} />

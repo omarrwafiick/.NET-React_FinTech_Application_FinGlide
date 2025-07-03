@@ -24,7 +24,7 @@ namespace finglide_api.Controllers
             var result = await _userService.LoginAsync(dto);
             if (result is not null) {
                 //Response.Cookies.Append("token", result);
-                return Ok(result);
+                return Ok(new {user = new {result.user.Email, result.user.UserName }, token = result.Token});
             }
             return BadRequest("Failed to login user to the system please check your credentials");
         }

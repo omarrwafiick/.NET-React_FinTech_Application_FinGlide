@@ -4401,11 +4401,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\sphinx\\Documents\\My Projects\\React_.Net\\FinanceProject\\server\\finglide-api\\finglide-api.csproj",
+      "projectUniqueName": "C:\\Users\\sphinx\\Documents\\My Projects\\ReactAndDotNet\\FinanceProject\\server\\finglide-api\\finglide-api.csproj",
       "projectName": "finglide-api",
-      "projectPath": "C:\\Users\\sphinx\\Documents\\My Projects\\React_.Net\\FinanceProject\\server\\finglide-api\\finglide-api.csproj",
+      "projectPath": "C:\\Users\\sphinx\\Documents\\My Projects\\ReactAndDotNet\\FinanceProject\\server\\finglide-api\\finglide-api.csproj",
       "packagesPath": "C:\\Users\\sphinx\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\sphinx\\Documents\\My Projects\\React_.Net\\FinanceProject\\server\\finglide-api\\obj\\",
+      "outputPath": "C:\\Users\\sphinx\\Documents\\My Projects\\ReactAndDotNet\\FinanceProject\\server\\finglide-api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -14,7 +14,8 @@ function App() {
           || !path.includes('notfound') 
           || !path.includes('signup') 
           || !path.includes('forget-password') 
-          || !path.includes('reset-password/:token');
+          || !path.includes('reset-password/:token')
+          || !path.includes('company')
           
   return (
     <div className="w-full min-h-screen font-sora overflow-hidden"> 

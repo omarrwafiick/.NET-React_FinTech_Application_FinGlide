@@ -16,7 +16,7 @@ const AddPortfolio = ({ onPortfolioCreate, symbol}: Props) => {
   return (
     <form onSubmit={submit}>
       <Input value='s' onChange={()=>console.log()} type='text'/>
-      <Button onClick={()=>console.log()} title='Add' type='submit' />
+      <Button style='mt-4' onClick={()=>console.log()} title='Add' type='submit' />
     </form>
   )
 }

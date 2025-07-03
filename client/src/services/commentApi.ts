@@ -1,6 +1,7 @@
 import { HandleError } from "../helpers/errorHandler";   
 import { Comment } from "../models/comment";
 import { sanitizeText } from "./sanitizer";
+import axios from "axios";
 
 const apiBase = "http://localhost:5179/api/finglide/comments";
 

@@ -30,7 +30,7 @@ namespace finglide_api.Services
 
                 var role = await _userManager.GetRolesAsync(user);
                 return new LoginResponse(new UserDto(user.UserName!, user.Email!), _tokenService.GenerateToken(user, role[0]));
-            }
+            } 
             catch (System.Exception)
             {
                 throw;
@@ -65,7 +65,7 @@ namespace finglide_api.Services
                 if (user is null) return false;  
                 return true;
             }
-            catch (System.Exception)
+            catch (Exception)
             { 
                 throw;
             }
