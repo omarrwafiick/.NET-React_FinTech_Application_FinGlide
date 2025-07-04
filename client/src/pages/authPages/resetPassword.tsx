@@ -5,7 +5,7 @@ import Logo from '../../assets/images/logo.png'
 import { UserContext, UserContextType } from '../../context/useAuth'
  import { getErrorMessage, isStrongPassword } from '../../helpers/validators'
 
-type Props = {}
+type Props = {} 
 
 const ResetPassword = (props: Props) => {
   const [password, setPassword] = useState("");
@@ -14,22 +14,22 @@ const ResetPassword = (props: Props) => {
   const { resetPassword } = useContext<UserContextType>(UserContext);
   const passwordRef = useRef<HTMLSpanElement>(null);
   const confirmPasswordRef = useRef<HTMLSpanElement>(null); 
+  const [valid, setValid] = useState(true);
 
   const handleResetPassword= async (e) => {
-    e.preventDefault();  
-    let valid = true;
+    e.preventDefault();   
     setDisable(true);
 
     if(!isStrongPassword(password) && passwordRef.current){  
       passwordRef.current.innerText = getErrorMessage("password");
-      valid = false;
+      setValid(false);
     }else if (passwordRef.current) {
       passwordRef.current.innerText = "";
     }
 
     if(password !== confirmPassword && confirmPasswordRef.current){  
       confirmPasswordRef.current.innerText = getErrorMessage("confirmPassword");
-      valid = false;
+      setValid(false);
     } else if (confirmPasswordRef.current) {
       confirmPasswordRef.current.innerText = "";
     }
@@ -37,6 +37,7 @@ const ResetPassword = (props: Props) => {
     if(valid){
       await resetPassword(password);
     }
+    setValid(true);
     setDisable(false);
   };
   return (
@@ -46,10 +47,12 @@ const ResetPassword = (props: Props) => {
             <img className='h-20' src={Logo} alt="logo" />
             <h1 className='text-2xl capitalize font-medium mt-4 mb-8 opacity-85'>reset password</h1> 
             
-            <Input placeholder='Password' value={password} onChange={(e)=> setPassword(e.target.value)} type='password' /> 
+            <Input placeholder='Password' value={password} onChange={(e)=> setPassword(e.target.value)} type='password'
+              style={!valid ? 'border-[#FF5733]/70' : 'border-[#34AFFB]/70'} /> 
             <span ref={passwordRef} className="min-h-[1.25rem] text-red-500 text-sm mt-2 mb-1 w-full"></span>
 
-            <Input placeholder='Confirm Password' value={confirmPassword} onChange={(e)=> setConfirmPassword(e.target.value)} type='password' /> 
+            <Input placeholder='Confirm Password' value={confirmPassword} onChange={(e)=> setConfirmPassword(e.target.value)} type='password'
+              style={!valid ? 'border-[#FF5733]/70' : 'border-[#34AFFB]/70'} /> 
             <span ref={confirmPasswordRef} className="min-h-[1.25rem] text-red-500 text-sm mt-2 mb-1 w-full"></span>
 
               <Button disable={disable} type='submit' title='reset' />

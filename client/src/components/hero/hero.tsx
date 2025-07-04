@@ -1,18 +1,25 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import RegularButton from '../button/regularButton'
 import HeroImage from '../../assets/images/hero.png' 
 import { FaFacebook, FaInstagram, FaXTwitter } from "react-icons/fa6";
+import { UserContext, UserContextType } from '../../context/useAuth';
 
 type Props = {}
 
 const Hero = (props: Props) => {
+  const { isLoggedIn } = useContext<UserContextType>(UserContext);
   return (
     <div className='flex justify-center items-center h-full w-full'>
       <div className='flex justify-center items-start w-9/12 h-full'>
         <div className='flex flex-col justify-center items-start w-6/12 mt-12'>
           <h1 className='text-7xl font-semibold mt-6'>Financial data without news.</h1>
           <p className='text-lg mt-7 w-10/12 opacity-75 leading-7'>Searh relevant financial documents without fear mongering and fake news.</p>
-          <div className='w-full flex justify-start mt-6'><RegularButton style='px-6!' navigateTo='/signup' title='get started 🡢' /></div> 
+          {
+            isLoggedIn() ? 
+            <></> 
+            :      
+            <div className='w-full flex justify-start mt-6'><RegularButton style='px-6!' navigateTo='/signup' title='get started 🡢' /></div> 
+          }
           <div className="flex justify-start items-center w-full space-x-6 mt-6">
             <a
               href="https://facebook.com"

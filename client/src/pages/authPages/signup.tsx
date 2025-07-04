@@ -10,43 +10,43 @@ const Signup = () => {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState(""); 
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState(""); 
   const [disable, setDisable] = useState(false);
   const { registerUser } = useContext<UserContextType>(UserContext);
   const usernameRef = useRef<HTMLSpanElement>(null);
   const passwordRef = useRef<HTMLSpanElement>(null);
   const emailRef = useRef<HTMLSpanElement>(null);
   const confirmPasswordRef = useRef<HTMLSpanElement>(null); 
+  const [valid, setValid] = useState(true);
 
   const handleRegister = async (e) => {
-    e.preventDefault();  
-    let valid = true;
+    e.preventDefault();   
     setDisable(true);
 
     if(!isLengthBetween(userName, 3, 30) && usernameRef.current){  
       usernameRef.current.innerText = getErrorMessage("userName");
-      valid = false;
+      setValid(false);
     }else if (usernameRef.current) {
     usernameRef.current.innerText = "";
     }
 
     if(!isEmailValid(email) && emailRef.current){  
       emailRef.current.innerText = getErrorMessage("email");
-      valid = false;
+      setValid(false);
     } else if (emailRef.current) {
       emailRef.current.innerText = "";
     }
 
     if(!isStrongPassword(password) && passwordRef.current){  
       passwordRef.current.innerText = getErrorMessage("password");
-      valid = false;
+      setValid(false);
     }else if (passwordRef.current) {
       passwordRef.current.innerText = "";
     }
 
     if(password !== confirmPassword && confirmPasswordRef.current){  
       confirmPasswordRef.current.innerText = getErrorMessage("confirmPassword");
-      valid = false;
+      setValid(false);
     } else if (confirmPasswordRef.current) {
       confirmPasswordRef.current.innerText = "";
     }
@@ -54,6 +54,7 @@ const Signup = () => {
     if(valid){
       await registerUser(email, userName, password);
     } 
+    setValid(true);
     setDisable(false);
   };
   
@@ -63,16 +64,20 @@ const Signup = () => {
           <form onSubmit={handleRegister} className='flex w-5/12 flex-col justify-center items-center shadow-xl p-14 rounded-md'> 
             <img className='h-20' src={Logo} alt="logo" />
             <h1 className='text-3xl capitalize font-medium mt-4 mb-8 opacity-85'>signup</h1>
-              <Input placeholder='username' value={userName} onChange={(e) => setUserName(e.target.value)} type='text' />
+              <Input placeholder='username' value={userName} onChange={(e) => setUserName(e.target.value)} type='text'
+                style={!valid ? 'border-[#FF5733]/70' : 'border-[#34AFFB]/70'} />
               <span ref={usernameRef} className="min-h-[1.25rem] text-red-500 text-sm mt-2 mb-1 w-full"></span>
 
-              <Input placeholder='Email' value={email} onChange={(e)=> setEmail((e.target.value))} type='text' /> 
+              <Input placeholder='Email' value={email} onChange={(e)=> setEmail((e.target.value))} type='text'
+                style={!valid ? 'border-[#FF5733]/70' : 'border-[#34AFFB]/70'} /> 
               <span ref={emailRef} className="min-h-[1.25rem] text-red-500 text-sm mt-2 mb-1 w-full"></span>
 
-              <Input placeholder='Password' value={password} onChange={(e)=> setPassword(e.target.value)} type='password' /> 
+              <Input placeholder='Password' value={password} onChange={(e)=> setPassword(e.target.value)} type='password'
+                style={!valid ? 'border-[#FF5733]/70' : 'border-[#34AFFB]/70'} /> 
               <span ref={passwordRef} className="min-h-[1.25rem] text-red-500 text-sm mt-2 mb-1 w-full"></span>
 
-              <Input placeholder='Confirm Password' value={confirmPassword} onChange={(e)=> setConfirmPassword(e.target.value)} type='password' /> 
+              <Input placeholder='Confirm Password' value={confirmPassword} onChange={(e)=> setConfirmPassword(e.target.value)} type='password'
+                style={!valid ? 'border-[#FF5733]/70' : 'border-[#34AFFB]/70'} /> 
               <span ref={confirmPasswordRef} className="min-h-[1.25rem] text-red-500 text-sm mt-2 mb-1 w-full"></span>
 
               <Button disable={disable} type='submit' title='register' />

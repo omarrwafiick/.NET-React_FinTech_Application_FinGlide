@@ -11,21 +11,22 @@ const ForgetPassword = (props: Props) => {
   const [disable, setDisable] = useState(false);
   const { forgetPassword } = useContext<UserContextType>(UserContext);
   const emailRef = useRef<HTMLSpanElement>(null);
+  const [valid, setValid] = useState(true);
 
   const handleForgetPassword= async (e) => {
     e.preventDefault();  
-    let valid = true;
     setDisable(true);
 
     if(!isEmailValid(email) && emailRef.current){  
       emailRef.current.innerText = getErrorMessage("email");
-      valid = false;
+      setValid(false);
     } else if (emailRef.current) {
       emailRef.current.innerText = "";
     }
     if(valid){
       await forgetPassword(email);
     }
+    setValid(true);
     setDisable(false);
   };
 
@@ -36,7 +37,8 @@ const ForgetPassword = (props: Props) => {
             <img className='h-20' src={Logo} alt="logo" />
             <h1 className='text-2xl capitalize font-medium mt-4 mb-8 opacity-85'>forget password</h1>
 
-            <Input placeholder='Email' value={email} onChange={(e)=> setEmail((e.target.value))} type='text' /> 
+            <Input placeholder='Email' value={email} onChange={(e)=> setEmail((e.target.value))} type='text' 
+              style={!valid ? 'border-[#FF5733]/70' : 'border-[#34AFFB]/70'}/> 
             <span ref={emailRef} className="min-h-[1.25rem] text-red-500 text-sm mt-2 mb-1 w-full"></span>
 
             <Button disable={disable} type='submit' title='send email' />
