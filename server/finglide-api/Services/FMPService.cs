@@ -20,11 +20,17 @@ namespace finglide_api.Services
                 {
                     var content = await result.Content.ReadAsStringAsync();
                     var tasks = JsonConvert.DeserializeObject<FMPStock[]>(content);
-                    var stock = tasks![0];
-                    if (stock is not null)
+                    Console.WriteLine("API Response: " + content);
+                    if (tasks != null && tasks.Length > 0)
                     {
+                        var stock = tasks[0];
                         return stock.FromFMPStockToStock();
                     }
+                    else
+                    {
+                        Console.WriteLine($"No stock data found for symbol: {Symbol}");
+                        return null;
+                    } 
                 }
                 Console.WriteLine("Network failure");
                 return null;

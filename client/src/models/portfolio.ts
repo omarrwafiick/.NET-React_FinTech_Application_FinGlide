@@ -1,10 +1,10 @@
  
 export type Portfolio = {
-    Symbol:string;
-    CompanyName:string;
-    Amount:number;
-    LastDivided:number; 
-    Industry:string;
-    MarketCapital:number;
+    symbol:string;
+    companyName:string;
+    amount:number;
+    lastDivided:number; 
+    industry:string;
+    marketCapital:number;
 }
  

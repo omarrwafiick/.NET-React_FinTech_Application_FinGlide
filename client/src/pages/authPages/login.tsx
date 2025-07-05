@@ -10,32 +10,37 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { loginUser } = useContext<UserContextType>(UserContext);
-  const [disable, setDisable] = useState(false);
+  const [disable, setDisable] = useState(false); 
   const passwordRef = useRef<HTMLSpanElement>(null);
-  const emailRef = useRef<HTMLSpanElement>(null);
-  const [valid, setValid] = useState(true);
+  const emailRef = useRef<HTMLSpanElement>(null); 
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
  
   const handleLogin = async (e) => {
     e.preventDefault();  
     setDisable(true);
-
+    let isValid = true;
+    
     if(!isEmailValid(email) && emailRef.current){  
       emailRef.current.innerText = getErrorMessage("email");
-      setValid(false);
+      isValid = false;
+      setEmailError(true);
     } else if (emailRef.current) {
       emailRef.current.innerText = "";
     }
 
     if(!isStrongPassword(password) && passwordRef.current){  
       passwordRef.current.innerText = getErrorMessage("password");
-      setValid(false);
+      isValid = false;
+      setPasswordError(true);
     }else if (passwordRef.current) {
       passwordRef.current.innerText = "";
     }
-    if(valid){ 
+    if(isValid){ 
+      setEmailError(false);
+      setPasswordError(false);
       await loginUser(email, password);
-    }
-    setValid(true);
+    } 
     setDisable(false);
   };
 
@@ -47,11 +52,11 @@ const Login = () => {
           <h1 className='text-3xl capitalize font-medium mt-4 mb-8 opacity-85'>login</h1>
 
           <Input placeholder='Email' value={email} onChange={(e)=> setEmail((e.target.value))} type='text'
-            style={!valid ? 'border-[#FF5733]/70' : 'border-[#34AFFB]/70'} /> 
+            style={emailError ? 'border-[#FF3131]/70' : 'border-[#34AFFB]/70'} /> 
           <span ref={emailRef} className="min-h-[1.25rem] text-red-500 text-sm mt-2 mb-1 w-full"></span>
 
           <Input placeholder='Password' value={password} onChange={(e)=> setPassword(e.target.value)} type='password'
-            style={!valid ? 'border-[#FF5733]/70' : 'border-[#34AFFB]/70'} /> 
+            style={passwordError ? 'border-[#FF3131]/70' : 'border-[#34AFFB]/70'} /> 
           <span ref={passwordRef} className="min-h-[1.25rem] text-red-500 text-sm mt-2 mb-1 w-full"></span>
            
           <Link to='/forget-password' className="capitalize text-sm mb-4 text-start w-full opacity-70">forget password?</Link>

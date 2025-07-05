@@ -16,47 +16,61 @@ const Signup = () => {
   const usernameRef = useRef<HTMLSpanElement>(null);
   const passwordRef = useRef<HTMLSpanElement>(null);
   const emailRef = useRef<HTMLSpanElement>(null);
-  const confirmPasswordRef = useRef<HTMLSpanElement>(null); 
-  const [valid, setValid] = useState(true);
+  const confirmPasswordRef = useRef<HTMLSpanElement>(null);  
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [nameError, setNameError] = useState(false);
+  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
 
   const handleRegister = async (e) => {
     e.preventDefault();   
     setDisable(true);
 
+    let isValid = true;
+
     if(!isLengthBetween(userName, 3, 30) && usernameRef.current){  
       usernameRef.current.innerText = getErrorMessage("userName");
-      setValid(false);
-    }else if (usernameRef.current) {
-    usernameRef.current.innerText = "";
+      isValid = false;
+      setNameError(true);
+    } else if (usernameRef.current) {
+      usernameRef.current.innerText = "";
     }
 
     if(!isEmailValid(email) && emailRef.current){  
       emailRef.current.innerText = getErrorMessage("email");
-      setValid(false);
+      isValid = false; 
+      setPasswordError(true);
     } else if (emailRef.current) {
       emailRef.current.innerText = "";
     }
 
     if(!isStrongPassword(password) && passwordRef.current){  
       passwordRef.current.innerText = getErrorMessage("password");
-      setValid(false);
-    }else if (passwordRef.current) {
+      isValid = false; 
+      setPasswordError(true);
+    } else if (passwordRef.current) {
       passwordRef.current.innerText = "";
     }
 
     if(password !== confirmPassword && confirmPasswordRef.current){  
       confirmPasswordRef.current.innerText = getErrorMessage("confirmPassword");
-      setValid(false);
+      isValid = false;
+      setConfirmPasswordError(true);
     } else if (confirmPasswordRef.current) {
       confirmPasswordRef.current.innerText = "";
     }
 
-    if(valid){
+    if (isValid) {
+      setEmailError(false);
+      setPasswordError(false);
+      setConfirmPasswordError(false);
+      setNameError(false);
       await registerUser(email, userName, password);
-    } 
-    setValid(true);
+    }
+
     setDisable(false);
   };
+
   
   return (
       <div className='min-h-screen w-full flex justify-center items-center'>
@@ -65,19 +79,19 @@ const Signup = () => {
             <img className='h-20' src={Logo} alt="logo" />
             <h1 className='text-3xl capitalize font-medium mt-4 mb-8 opacity-85'>signup</h1>
               <Input placeholder='username' value={userName} onChange={(e) => setUserName(e.target.value)} type='text'
-                style={!valid ? 'border-[#FF5733]/70' : 'border-[#34AFFB]/70'} />
+                style={nameError ? 'border-[#FF3131]/70' : 'border-[#34AFFB]/70'} />
               <span ref={usernameRef} className="min-h-[1.25rem] text-red-500 text-sm mt-2 mb-1 w-full"></span>
 
               <Input placeholder='Email' value={email} onChange={(e)=> setEmail((e.target.value))} type='text'
-                style={!valid ? 'border-[#FF5733]/70' : 'border-[#34AFFB]/70'} /> 
+                style={emailError ? 'border-[#FF3131]/70' : 'border-[#34AFFB]/70'} /> 
               <span ref={emailRef} className="min-h-[1.25rem] text-red-500 text-sm mt-2 mb-1 w-full"></span>
 
               <Input placeholder='Password' value={password} onChange={(e)=> setPassword(e.target.value)} type='password'
-                style={!valid ? 'border-[#FF5733]/70' : 'border-[#34AFFB]/70'} /> 
+                style={passwordError ? 'border-[#FF3131]/70' : 'border-[#34AFFB]/70'} /> 
               <span ref={passwordRef} className="min-h-[1.25rem] text-red-500 text-sm mt-2 mb-1 w-full"></span>
 
               <Input placeholder='Confirm Password' value={confirmPassword} onChange={(e)=> setConfirmPassword(e.target.value)} type='password'
-                style={!valid ? 'border-[#FF5733]/70' : 'border-[#34AFFB]/70'} /> 
+                style={confirmPasswordError ? 'border-[#FF3131]/70' : 'border-[#34AFFB]/70'} /> 
               <span ref={confirmPasswordRef} className="min-h-[1.25rem] text-red-500 text-sm mt-2 mb-1 w-full"></span>
 
               <Button disable={disable} type='submit' title='register' />

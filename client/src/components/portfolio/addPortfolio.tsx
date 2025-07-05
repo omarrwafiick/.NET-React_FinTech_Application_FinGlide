@@ -9,15 +9,15 @@ type Props = {
 
 const AddPortfolio = ({ onPortfolioCreate, symbol}: Props) => {
 
-  const submit = async (e:FormEvent)=>{ 
+  const submit = async (e:FormEvent)=>{  
     onPortfolioCreate(e, symbol); 
   }
 
   return (
-    <form onSubmit={submit}>
-      <Input value='s' onChange={()=>console.log()} type='text'/>
-      <Button style='mt-4' onClick={()=>console.log()} title='Add' type='submit' />
-    </form>
+    <div>
+      {/* <Input value='s' onChange={()=>console.log()} type='text'/> */}
+      <Button style='mt-4' onClick={(e)=>submit(e)} title='Add' type='submit' />
+    </div>
   )
 }
 

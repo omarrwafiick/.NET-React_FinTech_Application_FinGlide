@@ -171,21 +171,25 @@ namespace finglide_api.Migrations
 
             modelBuilder.Entity("finglide_api.Models.Portfolio", b =>
                 {
-                    b.Property<int>("StokeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.HasKey("StokeId", "UserId", "Id");
+                    b.Property<int>("StokeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("StokeId", "UserId")
+                        .IsUnique();
 
                     b.ToTable("Portfolios");
                 });

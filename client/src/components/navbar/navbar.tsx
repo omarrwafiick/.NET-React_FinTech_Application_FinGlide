@@ -25,7 +25,7 @@ const Navbar = () => {
             <div>
               {isLoggedIn() ? (
                 <> 
-                  <span className='text-lg opacity-90 me-4'>
+                  <span className='text-lg opacity-90 me-8'>
                     <a className='capitalize'>welcome : </a> <span className='font-semibold opacity-85'>{user.userName}</span>
                   </span>
                   <RegularButton onClick={logoutUser} navigateTo='/login' title="logout" variant='outline' />

@@ -8,7 +8,7 @@ export const CreatePortfolioApi = async (symbol:string, email:string) => {
         const result = await axios.post(apiBase,{symbol, email});
         return result.status;
     } catch (error) {
-        HandleError(error);
+        HandleError(error.message);
     }
 };
 

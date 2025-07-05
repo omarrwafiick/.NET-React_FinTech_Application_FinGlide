@@ -2,8 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import CardList from '../../components/cardlist/cardlist';
 import SearchSection from '../../components/searchSection/searchSection';
 import { searchByCompanyName } from '../../services/fmpApi';
-import { ChangeEvent, useState } from 'react';
-import { CompanySearch } from '../../types/types';
+import { ChangeEvent, useState } from 'react';  
 import toaster from 'react-hot-toast'; 
 import PortfolioList from '../../components/portfolioList/portfolioList';
 import { Portfolio } from '../../models/portfolio';
@@ -20,7 +19,7 @@ const Search = () => {
   useEffect(()=>{
     const portfolioData = async ()=>{
     const result = await GetPortfolioApi();
-      if(result.length > 0){ 
+      if(result?.length > 0){ 
         setPortfolio(result);
       }
       else{
@@ -28,7 +27,7 @@ const Search = () => {
       }
     }
     portfolioData(); 
-  },[portfolio])
+  },[])
 
   const onPortfolioCreate = async (e:any, symbol:string)=>{
     e.preventDefault();
@@ -51,9 +50,9 @@ const Search = () => {
     const result = await DeletePortfolioApi(symbol);
     if(result >= 200){ 
       toaster.success("Portfolio was deleted successfully")
-      const exists = portfolio.find(x=> x.Symbol === symbol);
+      const exists = portfolio.find(x=> x.symbol === symbol);
       if(exists){
-        const updatedPortfolio = portfolio.filter(x=>x.Symbol !== symbol)
+        const updatedPortfolio = portfolio.filter(x=>x.symbol !== symbol)
         setPortfolio(updatedPortfolio); 
       }
     }

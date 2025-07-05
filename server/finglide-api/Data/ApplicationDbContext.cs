@@ -31,7 +31,16 @@ namespace finglide_api.Data
                 ]
             );
 
-            builder.Entity<Portfolio>(x => x.HasKey(p => new { p.StokeId, p.UserId, p.Id }));
+            builder.Entity<Portfolio>(x =>
+            { 
+                x.HasKey(p => p.Id);
+ 
+                x.Property(p => p.Id)
+                .ValueGeneratedOnAdd();
+ 
+                x.HasIndex(p => new { p.StokeId, p.UserId })
+                .IsUnique();
+            });
 
             builder.Entity<Portfolio>()
                 .HasOne(u => u.User)
