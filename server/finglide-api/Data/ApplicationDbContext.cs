@@ -13,8 +13,8 @@ namespace finglide_api.Data
         public DbSet<Portfolio> Portfolios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
-        { 
-            base.OnModelCreating(builder); 
+        {
+            base.OnModelCreating(builder);
 
             builder.Entity<IdentityRole>().HasData(
                 [
@@ -32,12 +32,12 @@ namespace finglide_api.Data
             );
 
             builder.Entity<Portfolio>(x =>
-            { 
+            {
                 x.HasKey(p => p.Id);
- 
+
                 x.Property(p => p.Id)
                 .ValueGeneratedOnAdd();
- 
+
                 x.HasIndex(p => new { p.StokeId, p.UserId })
                 .IsUnique();
             });
@@ -45,12 +45,14 @@ namespace finglide_api.Data
             builder.Entity<Portfolio>()
                 .HasOne(u => u.User)
                 .WithMany(s => s.Portfolios)
-                .HasForeignKey(k => k.UserId);
+                .HasForeignKey(k => k.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Portfolio>()
                 .HasOne(u => u.Stock)
                 .WithMany(s => s.Portfolios)
-                .HasForeignKey(k => k.StokeId); 
+                .HasForeignKey(k => k.StokeId)
+                .OnDelete(DeleteBehavior.Cascade); 
         }
     }
 }

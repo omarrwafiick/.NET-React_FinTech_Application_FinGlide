@@ -4,7 +4,7 @@ export type Comment = {
     title:string;
     content:string;
     createdAt:Date;
-    user:{
+    userDto:{
         userName: string,
         email: string
     }

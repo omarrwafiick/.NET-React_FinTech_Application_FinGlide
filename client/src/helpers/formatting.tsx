@@ -32,6 +32,10 @@ export const formatLargeNonMonetaryNumber: any = (number: number) => {
   }
 };
 
-export const formatRatio = (ratio: number) => {
-  return (Math.round(ratio * 100) / 100).toFixed(2);
+export const formatRatio = (ratio: number | undefined | null) => {
+  if (typeof ratio !== 'number' || isNaN(ratio)) {
+    return '--';  
+  }
+
+  return ratio.toFixed(2); 
 };

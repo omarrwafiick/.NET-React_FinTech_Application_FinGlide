@@ -43,3 +43,4 @@ wwwroot/lib/
  
 Migrations/
  
+.fake

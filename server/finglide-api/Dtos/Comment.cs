@@ -2,8 +2,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace finglide_api.Dtos
 {
-    public record GetCommentDto(int Id, string Title, string Content, DateTime CreatedAt, UserDto CreatedBy);
-    public record GetCommentDetailsDto(int Id, string Title, string Content, DateTime CreatedAt, GetStockBaseDto Stock);
+    public record GetCommentDto(int Id, string Title, string Content, DateTime CreatedAt, object userDto);
+    public record GetCommentDetailsDto(int Id, string Title, string Content, DateTime CreatedAt, GetStockBaseDto Stock, object userDto);
     public class CreateCommentDto
     {
         [Required][Length(3, 280)]

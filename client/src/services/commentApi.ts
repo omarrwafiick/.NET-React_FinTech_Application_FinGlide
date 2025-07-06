@@ -19,6 +19,7 @@ export const CreateCommentApi = async (title:string , content:string, symbol:str
 export const GetCommentsApi = async (symbol:string, isDesc:boolean) : Promise<Comment[]>=>{
     try {
         const result = await axios.get<Comment[]>(apiBase+`/${symbol}/${isDesc}`);
+        console.log(result)
         return result.data;
     } catch (error) {
         HandleError(error);

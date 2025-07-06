@@ -7,10 +7,11 @@ import toaster from 'react-hot-toast';
 import { getErrorMessage, isLengthBetween } from '../../helpers/validators'
 
 type Props = {
-    ticker:string
+    ticker:string,
+    getComments:any
 }
 
-const AddStockComment = ({ticker}: Props) => {
+const AddStockComment = ({ticker, getComments}: Props) => {
   const { user } = useContext<UserContextType>(UserContext);
   const [title,setTitle] = useState("");
   const [content,setContent] = useState("");
@@ -39,8 +40,11 @@ const AddStockComment = ({ticker}: Props) => {
 
     if(valid){ 
       const result = await CreateCommentApi(title, content, ticker, user.email)  
-      if(result === 204){
+      if(result <= 204){
+          setTitle('');
+          setContent('');
           toaster.success("Comment was created successfully");
+          getComments();
       }    
       else{
           toaster.error("Network error occured")
@@ -49,7 +53,7 @@ const AddStockComment = ({ticker}: Props) => {
     setDisable(false);
   }
   return (
-    <div className='w-7/12 mb-6'>
+    <div className='w-7/12 mb-6  mt-16'>
         <form onSubmit={submitComment}>  
 
           <Input placeholder='title' value={title} onChange={(e)=> setTitle((e.target.value))} type='text' /> 

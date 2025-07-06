@@ -11,7 +11,7 @@ const Navbar = () => {
 
   return (
     <>
-      {(["/", "/search"].includes(location.pathname) || location.pathname.startsWith("/company")) && (
+      {(["/", "/search","/company"].includes(location.pathname) || location.pathname.startsWith("company")) && (
         <nav className='flex fixed bg-white z-10 justify-center items-center w-full min-h-14 p-4'> 
           <div className='flex justify-between w-9/12'>
             <div className='flex justify-center items-center'>

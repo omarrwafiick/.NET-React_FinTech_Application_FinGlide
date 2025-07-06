@@ -84,7 +84,7 @@ export const UserProvider = ({ children }:Props) =>{
                 setConfirmed(false);
                 localStorage.removeItem("verified-email");
                 toaster.success("Password was reseted successfully");
-                navigate("/login");
+                navigate("/login"); 
             }
         }).catch((error)=>toaster.error(error.message));
     }

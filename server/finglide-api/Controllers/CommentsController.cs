@@ -1,5 +1,6 @@
 
 using finglide_api.Sanitizers;
+using Microsoft.EntityFrameworkCore;
 
 namespace finglide_api.Controllers
 {
@@ -33,7 +34,7 @@ namespace finglide_api.Controllers
             if (isdescending) result.OrderByDescending(c => c.CreatedAt);
             else result.OrderBy(c => c.CreatedAt);
 
-            return result is not null ? Ok(result.Select(c => c.FromCommentToDtoDetails())) : NotFound("Nothing was found");
+            return result is not null || !result.Any(x=>x.User == null) ? Ok(result.Select(c => c.FromCommentToDtoDetails())) : NotFound("Nothing was found");
         }
 
         [HttpPost("{symbol:alpha}")]

@@ -22,6 +22,7 @@ const PortfolioList = ({portfolio, onPortfolioRemove}: Props) => {
                 <h4 className=''>Nothing to show</h4>
             }
         </div> 
+        <div className='border-b-2 bg-black w-full' />
     </div> 
   )
 }

@@ -58,25 +58,30 @@ namespace finglide_api.Controllers
                     userExists.Id,
                     stock.Id
                 )
-            );
-            Console.WriteLine(result);
+            ); 
             return result > -1 ? Ok( new { id = result }) : BadRequest("Failed to create new portfolio");
         }
     
-        [HttpDelete("symbol")]
-        public async Task<IActionResult> Delete([FromRoute] string symbol)
+        [HttpDelete("{symbol}")]
+        public async Task<IActionResult> Delete(string symbol)
         {
             var userName = User.GetUserName();
             var user = await _userManager.FindByNameAsync(userName!);
 
             var portfolio = await _portfolioRepository.GetAsync(x=> x.UserId == user!.Id, p => p.Stock);
-            if (portfolio is null)
-                return NotFound("Nothing was found");
-            var stockToBeDeleted = portfolio.Where(p => p.Stock.Symbol.ToLower() == Sanitizer.SanitizeText(symbol).ToLower());
-            Console.WriteLine("/////////////");
-            Console.WriteLine(stockToBeDeleted.ToList()[0].UserId);
-            var result = await _portfolioRepository.DeleteAsync(stockToBeDeleted.ToList()[0]);
-            return result ? NoContent() : BadRequest("Failed to delete portfolio");
+            var item = portfolio.FirstOrDefault(x => x.Stock.Symbol.ToLower() == symbol.ToLower());
+            if (item is null)
+                return NotFound("Nothing was found"); 
+             
+            try
+            {
+                var result = await _portfolioRepository.DeleteAsync(item);
+                return result ? NoContent() : BadRequest("Delete failed");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            } 
         }
     }
 }

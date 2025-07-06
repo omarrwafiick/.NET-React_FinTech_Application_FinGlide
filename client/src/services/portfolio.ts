@@ -23,7 +23,7 @@ export const GetPortfolioApi = async () : Promise<Portfolio[]> => {
 
 export const DeletePortfolioApi = async (symbol:string) => {
     try {
-        const result = await axios.delete(apiBase+`/${symbol}`);
+        const result = await axios.delete(apiBase+`/${symbol}`); 
         return result.status;
     } catch (error) {
         HandleError(error);

@@ -22,9 +22,9 @@ const Search = () => {
       if(result?.length > 0){ 
         setPortfolio(result);
       }
-      else{
-        toaster.error(`Error : ${result}`); 
-      }
+      // else{
+      //   toaster.error(`Error : ${result}`); 
+      // }
     }
     portfolioData(); 
   },[])
@@ -32,24 +32,26 @@ const Search = () => {
   const onPortfolioCreate = async (e:any, symbol:string)=>{
     e.preventDefault();
     const result = await CreatePortfolioApi(symbol, user.email);
-    if(result === 204){
+    if(result <= 204){
       toaster.success("Portfolio was added successfully");  
       const val = e.target.value;
       const exists = portfolio.find(x=> x === val);
       if(!exists){
         const updatedPortfolio = [...portfolio, val]
-        setPortfolio(updatedPortfolio); 
+        setPortfolio(updatedPortfolio);
+        const result = await GetPortfolioApi(); 
+        setPortfolio(result)
       }
     }
     else{
-        toaster.error("Network error")
+        toaster.error("Stock in not stable at the moment")
     }
   }
 
   const onPortfolioRemove = async (symbol:string)=>{  
     const result = await DeletePortfolioApi(symbol);
     if(result >= 200){ 
-      toaster.success("Portfolio was deleted successfully")
+      toaster.success("Deleted successfully")
       const exists = portfolio.find(x=> x.symbol === symbol);
       if(exists){
         const updatedPortfolio = portfolio.filter(x=>x.symbol !== symbol)

@@ -14,18 +14,18 @@ const Company = (props: Props) => {
   let { ticker } = useParams();
   const [company, setCompany] = useState<CompanyProfile>();
 
-  // useEffect(()=>{
-  //   const getData = async () => {
-  //     const data = await getCompanyProfileBySymbol(ticker);
-  //     if(typeof data !== 'string'){
-  //       setCompany(data);
-  //     }
-  //     else{
-  //       toaster.error(`Error : ${data}`); 
-  //     }
-  //   };
-  //   getData();
-  // },[]);
+  useEffect(()=>{
+    const getData = async () => {
+      const data = await getCompanyProfileBySymbol(ticker);
+      if(typeof data !== 'string'){
+        setCompany(data);
+      }
+      else{
+        toaster.error(`Error : ${data}`); 
+      }
+    };
+    getData();
+  },[]);
  
   return ( 
     <div className='flex'>

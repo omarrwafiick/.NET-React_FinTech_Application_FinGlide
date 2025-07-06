@@ -17,24 +17,25 @@ const CompanyProfile = () => {
   const [commentsOrder,setCommentsOrder] = useState<boolean>(false);
   const [comments,setComments] = useState<Comment[]>([]); 
 
-  useEffect(()=>{  
-    const commentsData = async ()=>{
-    const result = await GetCommentsApi(ticker, commentsOrder);
-      if(result?.length > 0){ 
+  const commentsResult = async () =>{
+    const result = await GetCommentsApi(ticker, commentsOrder); 
+    if(result?.length > 0){ 
         setComments(result);
       }
-      else{
-        toaster.error(`Error : ${result}`); 
-      }
+  } 
+
+  useEffect(()=>{  
+    const commentsData = async ()=>{
+      await commentsResult(); 
     }
     commentsData(); 
-  },[comments])
+  },[])
 
   useEffect(() => {
     const data = async ()=>{
       const result = await getCompanyRatiosBySymbol(ticker);
-      if(typeof result !== 'string'){ 
-        setCompanyData(result);
+      if(typeof result !== 'string'){  
+        setCompanyData(result); 
       }
       else{
         toaster.error(`Error : ${result}`); 
@@ -49,9 +50,11 @@ const CompanyProfile = () => {
           companyData  ?   
           <>
             <RatioList data={Object.fromEntries(Object.entries(companyData).slice(0, 12))} />   
-            <div className='w-11/12 bg-black/5 m-6' style={{ height: '1.5px' }}></div>
-            <StockCommentList comments={comments} />
-            <AddStockComment ticker={ticker} />
+            <div className='border-b-2 bg-black w-full mt-6 mb-6' />
+            <div className='w-full flex'>  
+              <StockCommentList comments={comments} />
+              <AddStockComment getComments={commentsResult} ticker={ticker} />
+            </div>
           </>
           : 
           <Loader />
