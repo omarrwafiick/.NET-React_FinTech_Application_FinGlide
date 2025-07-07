@@ -29,8 +29,8 @@ const Login = () => {
       emailRef.current.innerText = "";
     }
 
-    if(!isStrongPassword(password) && passwordRef.current){  
-      passwordRef.current.innerText = getErrorMessage("password");
+    if(password.length <= 0){  
+      passwordRef.current.innerText = "Password is mandatory";
       isValid = false;
       setPasswordError(true);
     }else if (passwordRef.current) {

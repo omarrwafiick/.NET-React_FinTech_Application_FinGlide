@@ -23,12 +23,7 @@ const IncomeStatement = (props: Props) => {
       }
     }
     data();
-  },[]);
-
-  // const dataArray = Object.entries(companyData!).map(([key, value]) => ({
-  //   key,
-  //   value
-  // }));
+  },[]); 
   
   return (
     <div className='overflow-auto'> 

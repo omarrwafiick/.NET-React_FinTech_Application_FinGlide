@@ -1,4 +1,5 @@
 import React from 'react';
+import { formatDate, formatLargeNonMonetaryNumber } from '../../helpers/formatting';
 
 type Props = {
   data: any[];
@@ -8,6 +9,9 @@ const Table = ({ data }: Props) => {
   if (!data || data.length === 0) return <p>No data</p>;
 
   const headers = Object.keys(data[0]);
+  const isDate = (value: any) => {
+    return typeof value === 'string' && !isNaN(Date.parse(value));
+  };
 
   return (
     <table className="table-auto border-collapse border  border-gray-300 w-full">
@@ -25,7 +29,11 @@ const Table = ({ data }: Props) => {
           <tr key={i}>
             {headers.map((header, k) => (
               <td key={k} className="border px-4 py-2">
-                {row[header]}
+                {typeof row[header] === 'number'
+                  ? formatLargeNonMonetaryNumber(row[header])
+                  : isDate(row[header])
+                    ? formatDate(row[header])
+                    : row[header]}
               </td>
             ))}
           </tr>

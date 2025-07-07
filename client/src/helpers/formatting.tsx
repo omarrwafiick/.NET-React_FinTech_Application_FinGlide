@@ -13,7 +13,7 @@ export const formatLargeMonetaryNumber: any = (number: number) => {
   } else if (number >= 1_000_000_000_000 && number < 1_000_000_000_000_000) {
     return "$" + (number / 1_000_000_000_000).toFixed(1) + "T";
   }
-};
+}; 
 
 export const formatLargeNonMonetaryNumber: any = (number: number) => {
   if (number < 0) {
@@ -38,4 +38,13 @@ export const formatRatio = (ratio: number | undefined | null) => {
   }
 
   return ratio.toFixed(2); 
+};
+
+export const formatDate = (dateStr: string): string => {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short', 
+    day: '2-digit',  
+  });
 };

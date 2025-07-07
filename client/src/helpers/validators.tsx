@@ -6,7 +6,7 @@ export const isEmailValid = (email: string) => {
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return regex.test(email);
 };
-
+ 
 export const isLengthBetween = (value: string, min: number, max: number) =>
   value.length >= min && value.length <= max;
 

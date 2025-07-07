@@ -25,8 +25,8 @@ export const searchByCompanyName = async (name:string) : Promise<CompanySearch[]
 
 export const getCompanyProfileBySymbol = async (symbol:any) : Promise<CompanyProfile|string> =>{
     try { 
-       const result = await axios.get<CompanyProfile>(`${apiBase}profile?symbol=${symbol}&apikey=${key}`); 
-        return result.data;
+       const result = await axios.get<CompanyProfile>(`${apiBase}profile?symbol=${symbol}&apikey=${key}`);  
+        return result.data[0];
     } catch (error:any) {
         HandleError(error);
     } 
@@ -53,7 +53,7 @@ export const getCompanyIncomeStatementBySymbol = async (symbol:any) : Promise<Co
 export const getCompanyBalanceSheetBySymbol = async (symbol:any) : Promise<CompanyBalanceSheet[]|string> =>{
     try {
        const result = await axios.get<CompanyBalanceSheet[]>(`${apiBase}balance-sheet-statement?symbol=${symbol}&apikey=${key}`);
-       console.log(result) 
+ 
        return result.data;
     } catch (error:any) {
         HandleError(error);

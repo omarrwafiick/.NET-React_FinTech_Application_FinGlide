@@ -9,7 +9,7 @@ type Props = {
 const StockCommentList = ({comments}: Props) => {
   return (
     <div className='w-full flex flex-col justify-center items-center'>
-        <h1 className='capitalize text-2xl w-full text-start font-semibold p-4'>comments :</h1>
+        <h1 className='capitalize text-2xl w-full text-start font-semibold pb-6'>stock's comments :</h1>
         {
             comments ?  
             comments.map((c, i)=>{

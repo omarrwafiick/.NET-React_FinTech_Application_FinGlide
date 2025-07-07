@@ -15,7 +15,7 @@ export interface CompanyProfile {
   mktCap: number;
   lastDiv: number;
   range: string;
-  changes: number;
+  change: number;
   companyName: string;
   currency: string;
   cik: string;

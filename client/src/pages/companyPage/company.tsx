@@ -34,18 +34,13 @@ const Company = (props: Props) => {
       </div>
       <div className='flex w-9/12'>
         <Dashboard ticker={ticker??""}>
+          <h1 className='capitalize text-2xl w-full text-start font-semibold pt-6'>company info :</h1>
             {company ? (
-              <div className="w-full grid grid-cols-3 gap-4">
-                {/* <div className="col-span-full flex justify-center">
-                  <img src={company.image} alt="Logo" className="w-24 h-24 rounded-full" />
-                </div>  */}
+              <div className="w-full grid grid-cols-3 gap-4 pt-6">
                 <CompanyCard title="Company Name" subTitle={company.companyName} /> 
-                <CompanyCard title="Price" subTitle={`$${formatLargeMonetaryNumber(company.price)}`} />
-                <CompanyCard title="Changes" subTitle={`${company.changes >= 0 ? '+' : ''}${company.changes}`} /> 
-                <CompanyCard title="Sector" subTitle={company.sector} /> 
-                <div>
-                  <p>{company.description}</p>
-                </div> 
+                <CompanyCard title="Price" subTitle={`${formatLargeMonetaryNumber(company.price)}`} />
+                <CompanyCard title="Changes" subTitle={`${company.change >= 0 ? '+' : ''}${company.change}`} /> 
+                <CompanyCard title="Sector" subTitle={company.sector} />  
                 <CompanyCard
                   title="Address"
                   subTitle={`${company.address}, ${company.city}, ${company.state} ${company.zip}`}
@@ -53,12 +48,12 @@ const Company = (props: Props) => {
                 <CompanyCard
                   title="Website"
                   subTitle={company.website}
-                />
-                <CompanyCard title="Description" subTitle={company.description} />
+                /> 
               </div>
             ) : (
               <p className='w-full pt-12 pb-12 text-center font-bold'>*Nothing was found</p>
             )}
+            <div className='border-b-2 bg-black w-full mt-8 mb-8' />
         </Dashboard>
       </div>
     </div>
